@@ -4,11 +4,11 @@
 <%@ page import = "com.mycgv_jsp.vo.BoardVo" %>     
 <%@ page import = "com.mycgv_jsp.dao.BoardDao" %>   
 
-<%	
+<%--
 	String bid = request.getParameter("bid"); // pk값 갖고오기
 	BoardDao boardDao = new BoardDao();
 	BoardVo boardVo = boardDao.select(bid);
-%>
+--%>
     
     
 <!DOCTYPE html>
@@ -31,33 +31,33 @@
 			<table class="board_content">
 				<tr>
 					<th>제목</th>
-					<td><%= boardVo.getBtitle() %></td>
+					<td>${bvo.btitle}</td>
 				</tr>
 				<tr>
 					<th>내용</th>
-					<td><%= boardVo.getBcontent() %></td>
+					<td>${bvo.bcontent}</td>
 				</tr>
 				<tr>
 					<th>조회수</th>
-					<td><%= boardVo.getBhits() %></td>
+					<td>${bvo.bhits}</td>
 				</tr>
 				<tr>
 					<th>작성자</th>
-					<td><%= boardVo.getId() %></td>
+					<td>${bvo.id}</td>
 				</tr>
 				<tr>
 					<th>작성일자</th>
-					<td><%= boardVo.getBdate() %></td>
+					<td>${bvo.bdate}</td>
 				</tr>
 				<tr>
 					<td colspan="2">
-						<a href="board_update.jsp?bid=<%=boardVo.getBid()%>">
+						<a href="board_update.jsp?bid=${bvo.bid}">
 							<button type="button" class="btn_style">수정하기</button></a>
-						<a href="board_delete.jsp?bid=<%=boardVo.getBid()%>">
+						<a href="board_delete.jsp?bid=${bvo.bid}">
 							<button type="button" class="btn_style">삭제하기</button></a>
-						<a href="board_list.jsp">
+						<a href="board_list.do">
 							<button type="button" class="btn_style">리스트</button></a>
-						<a href="http://localhost:9000/mycgv_jsp/index.jsp">
+						<a href="http://localhost:9000/mycgv_jsp/index.do">
 						<button type="button" class="btn_style">홈으로</button></a>
 					</td>
 				</tr>
@@ -66,25 +66,8 @@
 	</div>
 	
 	<!-- footer -->
-	<!-- <iframe src="http://localhost:9000/mycgv_jsp/footer.jsp"
-			scrolling="no" width="100%" height="500px" frameborder=0></iframe> -->	
 	<jsp:include page="../footer.jsp"></jsp:include>
 </body>
 </html>
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
 
 

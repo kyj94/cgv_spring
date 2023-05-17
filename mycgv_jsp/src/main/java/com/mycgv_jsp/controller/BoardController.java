@@ -13,6 +13,7 @@ import com.mycgv_jsp.vo.BoardVo;
 @Controller
 public class BoardController {
 	
+	/** board_list.do - 게시글 전체 리스트 **/
 	@RequestMapping(value="/board_list.do", method=RequestMethod.GET)
 	public ModelAndView board_list() {
 		ModelAndView model = new ModelAndView();
@@ -23,6 +24,21 @@ public class BoardController {
 		
 		model.addObject("list", list);
 		model.setViewName("/board/board_list");
+		
+		return model;
+	}
+	
+	
+	/** board_content.do - 게시글 상세 보기 **/
+	@RequestMapping(value="/board_content.do", method=RequestMethod.GET)
+	public ModelAndView board_content(String bid) {
+		ModelAndView model = new ModelAndView();
+		
+		BoardDao boardDao = new BoardDao();
+		BoardVo boardVo = boardDao.select(bid);
+		
+		model.addObject("bvo", boardVo);
+		model.setViewName("/board/board_content");
 		
 		return model;
 	}

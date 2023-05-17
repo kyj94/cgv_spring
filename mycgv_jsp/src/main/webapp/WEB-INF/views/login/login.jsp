@@ -8,12 +8,21 @@
 <link rel="stylesheet" href="http://localhost:9000/mycgv_jsp/css/mycgv_jsp.css">
 <script src="http://localhost:9000/mycgv_jsp/js/jquery-3.6.4.min.js"></script>
 <script src="http://localhost:9000/mycgv_jsp/js/mycgv_jsp_jquery.js"></script>
+
+<script>
+	let join_result ="${join_result}";
+	if(join_result == 'OK') {
+		alert("회원가입 성공");
+	}
+</script>
+
 </head>
+
 <body>
 	<!-- header -->
 	<!-- <iframe src="http://localhost:9000/mycgv_jsp/header.jsp"
 			scrolling="no" width="100%" height="149px" frameborder=0></iframe> -->
-	<jsp:include page="/header.do"></jsp:include>
+	<jsp:include page="../header.jsp"></jsp:include>
 	
 	<!-- content -->
 	<div class="content">
@@ -45,7 +54,7 @@
 	<!-- footer -->
 	<!-- <iframe src="http://localhost:9000/mycgv_jsp/footer.jsp"
 			scrolling="no" width="100%" height="500px" frameborder=0></iframe> -->	
-	<jsp:include page="/footer.do"></jsp:include>
+	<jsp:include page="../footer.jsp"></jsp:include>
 </body>
 </html>
 

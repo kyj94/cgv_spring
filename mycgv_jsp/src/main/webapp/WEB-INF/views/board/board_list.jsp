@@ -13,8 +13,6 @@
 </head>
 <body>
 	<!-- header -->
-	<!-- <iframe src="http://localhost:9000/mycgv_jsp/header.jsp"
-			scrolling="no" width="100%" height="149px" frameborder=0></iframe> -->
 	<jsp:include page="/header.do"></jsp:include>
 	
 	<!-- content -->
@@ -41,7 +39,7 @@
 				
 				<tr>
 					<td>${boardVo.rno}</td>
-					<td><a href="board_content.jsp?bid=${boardVo.bid}"> ${boardVo.btitle}</a></td>
+					<td><a href="board_content.do?bid=${boardVo.bid}"> ${boardVo.btitle}</a></td>
 					<td>${boardVo.bhits}</td>
 					<td>${boardVo.id}</td>
 					<td>${boardVo.bdate}</td>
@@ -57,8 +55,6 @@
 	</div>
 	
 	<!-- footer -->
-	<!-- <iframe src="http://localhost:9000/mycgv_jsp/footer.jsp"
-			scrolling="no" width="100%" height="500px" frameborder=0></iframe> -->	
 	<jsp:include page="/footer.do"></jsp:include>
 </body>
 </html>
