@@ -130,7 +130,39 @@ public class BoardDao extends DBConn {
 		}
 		
 		return result;
-		
 	} // int delete(String bid)
-
+	
+	
+	/** updateHits - 게시판 조회수 **/
+	public int updateHits(String bid) {
+		int result = 0;
+		String sql = "update mycgv_board set bhits=(bhits+1) where bid=? ";
+		
+		getPreparedStatement(sql);
+		
+		try {
+			pstmt.setString(1, bid);
+			result = pstmt.executeUpdate();
+			
+		} catch (Exception e) {
+			e.printStackTrace();
+		}
+		
+		return result;
+	}
+	
+	/** updateHits - 게시판 조회수 - void VER
+	 * public void updateHits(String bid) {
+	 * 	String sql = "update mycgv_board set bhits=(bhits+1) where bid=? ";
+	 * 	getPreparedStatement(sql);
+	 * 
+	 * try {
+			pstmt.setString(1, bid);
+			pstmt.executeUpdate();
+			
+		} catch (Exception e) {
+			e.printStackTrace();
+		}
+	 * }
+	 * **/
 }  // class

@@ -9,8 +9,6 @@
 </head>
 <body>
 	<!-- header -->
-	<!-- <iframe src="http://localhost:9000/mycgv_jsp_jsp/header.jsp"
-			scrolling="no" width="100%" height="149px" frameborder=0></iframe> -->
 	<jsp:include page="../header.jsp"></jsp:include>
 	
 	<!-- content -->
@@ -39,9 +37,9 @@
 				</tr>
 				<tr>
 					<td colspan="2">
-						<a href="notice_list.jsp">
+						<a href="notice_list.do">
 							<button type="button" class="btn_style">리스트</button></a>
-						<a href="http://localhost:9000/mycgv_jsp/index.jsp">
+						<a href="http://localhost:9000/mycgv_jsp/index.do">
 						<button type="button" class="btn_style">홈으로</button></a>
 					</td>
 				</tr>
@@ -50,24 +48,7 @@
 	</div>
 	
 	<!-- footer -->
-	<!-- <iframe src="http://localhost:9000/mycgv_jsp_jsp/footer.jsp"
-			scrolling="no" width="100%" height="500px" frameborder=0></iframe> -->	
 	<jsp:include page="../footer.jsp"></jsp:include>
 </body>
 </html>
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
 

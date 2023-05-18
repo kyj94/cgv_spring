@@ -1,5 +1,8 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8"
     pageEncoding="UTF-8"%>
+    
+<%@ taglib uri="http://java.sun.com/jsp/jstl/core" prefix="c" %>
+    
 <!DOCTYPE html>
 <html>
 <head>
@@ -9,8 +12,6 @@
 </head>
 <body>
 	<!-- header -->
-	<!-- <iframe src="http://localhost:9000/mycgv_jsp_jsp_jsp/header.jsp"
-			scrolling="no" width="100%" height="149px" frameborder=0></iframe> -->
 	<jsp:include page="../../header.jsp"></jsp:include>
 	
 	<!-- content -->
@@ -20,7 +21,7 @@
 			<table class="board_list">
 				<tr>
 					<td colspan="4">
-						<a href="admin_notice_write.jsp">
+						<a href="admin_notice_write.do">
 							<button type="button">등록하기</button>
 						</a>
 					</td>
@@ -31,66 +32,18 @@
 					<th>조회수</th>
 					<th>작성일자</th>
 				</tr>
+				
+				<c:forEach var="adminNoticeVo" items="${list}"> 
+				
 				<tr>
-					<td>1</td>
-					<td><a href="admin_notice_content.jsp">CGV 공지사항 입니다.</a></td>
-					<td>1000</td>
-					<td>2023-04-18</td>
+					<td>${adminNoticeVo.rno}</td>
+					<td><a href="admin_notice_content.do?nid=${adminNoticeVo.nid}"> ${adminNoticeVo.ntitle}</a></td>
+					<td>${adminNoticeVo.nhits}</td>
+					<td>${adminNoticeVo.ndate}</td>
 				</tr>
-				<tr>
-					<td>2</td>
-					<td>CGV 공지사항 입니다.</td>
-					<td>1000</td>
-					<td>2023-04-18</td>
-				</tr>
-				<tr>
-					<td>3</td>
-					<td>CGV 공지사항 입니다.</td>
-					<td>1000</td>
-					<td>2023-04-18</td>
-				</tr>
-				<tr>
-					<td>4</td>
-					<td>CGV 공지사항 입니다.</td>
-					<td>1000</td>
-					<td>2023-04-18</td>
-				</tr>
-				<tr>
-					<td>5</td>
-					<td>CGV 공지사항 입니다.</td>
-					<td>1000</td>
-					<td>2023-04-18</td>
-				</tr>
-				<tr>
-					<td>6</td>
-					<td>CGV 공지사항 입니다.</td>
-					<td>1000</td>
-					<td>2023-04-18</td>
-				</tr>
-				<tr>
-					<td>7</td>
-					<td>CGV 공지사항 입니다.</td>
-					<td>1000</td>
-					<td>2023-04-18</td>
-				</tr>
-				<tr>
-					<td>8</td>
-					<td>CGV 공지사항 입니다.</td>
-					<td>1000</td>
-					<td>2023-04-18</td>
-				</tr>
-				<tr>
-					<td>9</td>
-					<td>CGV 공지사항 입니다.</td>
-					<td>1000</td>
-					<td>2023-04-18</td>
-				</tr>
-				<tr>
-					<td>10</td>
-					<td>CGV 공지사항 입니다.</td>
-					<td>1000</td>
-					<td>2023-04-18</td>
-				</tr>
+				
+				</c:forEach>
+				
 				<tr>
 					<td colspan="4"><< 1  2  3  4  5 >></td>
 				</tr>
@@ -99,24 +52,7 @@
 	</div>
 	
 	<!-- footer -->
-	<!-- <iframe src="http://localhost:9000/mycgv_jsp_jsp_jsp/footer.jsp"
-			scrolling="no" width="100%" height="500px" frameborder=0></iframe> -->	
 	<jsp:include page="../../footer.jsp"></jsp:include>
 </body>
 </html>
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
 

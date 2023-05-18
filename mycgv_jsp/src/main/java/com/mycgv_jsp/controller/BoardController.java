@@ -37,6 +37,11 @@ public class BoardController {
 		BoardDao boardDao = new BoardDao();
 		BoardVo boardVo = boardDao.select(bid);
 		
+		// 조회수 업데이트-DB
+		if(boardVo != null) {
+			boardDao.updateHits(bid);
+		}
+		
 		model.addObject("bvo", boardVo);
 		model.setViewName("/board/board_content");
 		
@@ -131,19 +136,5 @@ public class BoardController {
 		
 		return viewName;
 	}
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
 
 } // class

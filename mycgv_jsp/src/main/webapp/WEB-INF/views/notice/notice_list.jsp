@@ -9,8 +9,6 @@
 </head>
 <body>
 	<!-- header -->
-	<!-- <iframe src="http://localhost:9000/mycgv_jsp/header.jsp"
-			scrolling="no" width="100%" height="149px" frameborder=0></iframe> -->
 	<jsp:include page="../header.jsp"></jsp:include>
 	
 	<!-- content -->
@@ -92,8 +90,6 @@
 	</div>
 	
 	<!-- footer -->
-	<!-- <iframe src="http://localhost:9000/mycgv_jsp/footer.jsp"
-			scrolling="no" width="100%" height="500px" frameborder=0></iframe> -->	
 	<jsp:include page="../footer.jsp"></jsp:include>
 </body>
 </html>
