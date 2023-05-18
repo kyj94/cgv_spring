@@ -54,6 +54,9 @@ public class BoardController {
 	@RequestMapping(value="/board_write_proc.do", method=RequestMethod.POST)
 	public String board_write_proc(BoardVo boardVo) {
 		// 1. 폼에서 넘어오는 데이터 BoardVo에 담기
+		// 2. BoardVo 데이터를 Dao에 전송
+		// 3. mycgv_board 데이블에 insert
+		
 		String viewName = "";
 		BoardDao boardDao = new BoardDao();
 		int result = boardDao.insert(boardVo);
@@ -65,15 +68,69 @@ public class BoardController {
 		}  else {
 			// 에러 페이지 호출
 		}
+		
 		return viewName;
-		
-		
-		// 2. BoardVo 데이터를 Dao에 전송
-		// 3. mycgv_board 데이블에 insert
-
-		
 	}
 	
+	
+	/** board_update.do - 게시글 글쓰기 수정 **/
+	@RequestMapping(value="/board_update.do", method=RequestMethod.GET)
+	public ModelAndView board_update(String bid) {
+		ModelAndView model = new ModelAndView();
+		BoardDao boardDao = new BoardDao();
+		BoardVo boardVo = boardDao.select(bid);
+		
+		model.addObject("boardVo", boardVo);
+		model.setViewName("/board/board_update");
+		
+		return model;
+	}
+	
+	
+	/** board_update_proc.do - 게시글 수정 처리 **/
+	@RequestMapping(value="/board_update_proc.do", method=RequestMethod.POST)
+	public String board_update_proc(BoardVo boardVo) {
+		String viewName = "";
+		
+		BoardDao boardDao = new BoardDao();
+		int result = boardDao.update(boardVo);
+		
+		if(result == 1) {
+			viewName = "redirect:/board_list.do";
+		}  else {
+			// 에러 페이지 호출
+		}
+		
+		return viewName;
+	}
+	
+	
+	/** board_delete.do - 게시글 삭제 **/
+	@RequestMapping(value="/board_delete.do", method=RequestMethod.GET)
+	public ModelAndView board_delete(String bid) {
+		ModelAndView model = new ModelAndView();
+		model.addObject("bid", bid);
+		model.setViewName("/board/board_delete");
+		return model;
+	}
+	
+	
+	/** board_delete_proc.do - 게시글 삭제 처리 **/
+	@RequestMapping(value="/board_delete_proc.do", method=RequestMethod.POST)
+	public String board_delete_proc(String bid) {
+		String viewName = "";
+		
+		BoardDao boardDao = new BoardDao();
+		int result = boardDao.delete(bid);
+		
+		if(result == 1) {
+			viewName = "redirect:/board_list.do";
+		}  else {
+			// 에러 페이지 호출
+		}
+		
+		return viewName;
+	}
 	
 	
 	

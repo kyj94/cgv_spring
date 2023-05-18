@@ -105,6 +105,7 @@ public class BoardDao extends DBConn {
 			
 			result = pstmt.executeUpdate();
 			
+			
 		} catch (Exception e) {
 			e.printStackTrace();
 		} 
