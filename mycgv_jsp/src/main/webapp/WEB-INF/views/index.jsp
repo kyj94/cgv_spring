@@ -11,7 +11,7 @@
 	
 	</style>
 	<script>
-		let login_result = "${login_result }"; 
+		let login_result = "${login_result}"; 
 		if(login_result == 'OK') {
 			alert("로그인 성공");
 		}
@@ -22,7 +22,7 @@
 <body>
 	<!-- header -->
 	<jsp:include page="header.jsp"></jsp:include>			
-		
+			
 	<!-- content -->	
 	<div class="content">
 		<section class="section1">	

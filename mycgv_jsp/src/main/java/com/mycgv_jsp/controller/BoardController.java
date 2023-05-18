@@ -42,5 +42,51 @@ public class BoardController {
 		
 		return model;
 	}
+	
+	/** board_write.do - 게시글쓰기 **/
+	@RequestMapping(value="/board_write.do", method=RequestMethod.GET)
+	public String board_write() {
+		return "/board/board_write";
+	}
+	
+	
+	/** board_write_proc.do - 게시글 글쓰기 처리 **/
+	@RequestMapping(value="/board_write_proc.do", method=RequestMethod.POST)
+	public String board_write_proc(BoardVo boardVo) {
+		// 1. 폼에서 넘어오는 데이터 BoardVo에 담기
+		String viewName = "";
+		BoardDao boardDao = new BoardDao();
+		int result = boardDao.insert(boardVo);
+		
+		if(result == 1) {
+			// response.sendRedirect("http://localhost:9000/mycgv_jsp/board/board_list.jsp");
+			// viewName = "/board/board_list";
+			viewName = "redirect:/board_list.do";
+		}  else {
+			// 에러 페이지 호출
+		}
+		return viewName;
+		
+		
+		// 2. BoardVo 데이터를 Dao에 전송
+		// 3. mycgv_board 데이블에 insert
 
-}
+		
+	}
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+
+} // class

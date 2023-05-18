@@ -1,16 +1,7 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8"
     pageEncoding="UTF-8"%>
     
-<%@ page import = "com.mycgv_jsp.vo.BoardVo" %>     
-<%@ page import = "com.mycgv_jsp.dao.BoardDao" %>   
 
-<%--
-	String bid = request.getParameter("bid"); // pk값 갖고오기
-	BoardDao boardDao = new BoardDao();
-	BoardVo boardVo = boardDao.select(bid);
---%>
-    
-    
 <!DOCTYPE html>
 <html>
 <head>
@@ -20,8 +11,6 @@
 </head>
 <body>
 	<!-- header -->
-	<!-- <iframe src="http://localhost:9000/mycgv_jsp/header.jsp"
-			scrolling="no" width="100%" height="149px" frameborder=0></iframe> -->
 	<jsp:include page="../header.jsp"></jsp:include>
 	
 	<!-- content -->
@@ -51,9 +40,9 @@
 				</tr>
 				<tr>
 					<td colspan="2">
-						<a href="board_update.jsp?bid=${bvo.bid}">
+						<a href="board_update.do?bid=${bvo.bid}">
 							<button type="button" class="btn_style">수정하기</button></a>
-						<a href="board_delete.jsp?bid=${bvo.bid}">
+						<a href="board_delete.do?bid=${bvo.bid}">
 							<button type="button" class="btn_style">삭제하기</button></a>
 						<a href="board_list.do">
 							<button type="button" class="btn_style">리스트</button></a>

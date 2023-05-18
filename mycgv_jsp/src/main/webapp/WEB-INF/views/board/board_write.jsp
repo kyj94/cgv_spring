@@ -19,7 +19,7 @@
 	<div class="content">
 		<section class="board">
 			<h1 class="title">게시판</h1>
-			<form name="writeForm" action="boardWriteProc.jsp" method="post">
+			<form name="writeForm" action="board_write_proc.do" method="post">
 				<table>
 					<tr>
 						<th class="test">제목</th>
