@@ -1,6 +1,7 @@
 package com.mycgv_jsp.vo;
 
 public class MemberVo {
+
 	// 폼에서 넘어오는 모든 name/value 저장
 	String id, pass, name, gender, email1, email2, addr1, addr2, tel, phone1, phone2, phone3, intro, grade;
 	

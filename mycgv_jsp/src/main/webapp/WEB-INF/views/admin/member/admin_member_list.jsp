@@ -1,28 +1,7 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8"
     pageEncoding="UTF-8"%>
     
-<%@ page import = "com.mycgv_jsp.vo.MemberVo" %>     
-<%@ page import = "com.mycgv_jsp.dao.MemberDao" %>   
-<%@ page import = "java.util.ArrayList" %>  
-
-<% 
-	String sid = (String)session.getAttribute("sid");
-	if(sid == null) {
-		out.write("<script>");
-		out.write("alert('정상적인 접근 방식이 아닙니다. 로그인을 진행해주세요.');");
-		out.write("location.href = 'http://localhost:9000/mycgv_jsp/login/login.jsp';");
-		out.write("</script>");
-	} else {
-		if(!sid.equals("admin")) {
-			out.write("<script>");
-			out.write("alert('관리자 접근 권한이 필요합니다. 다시 로그인을 진행해주세요.');");
-			out.write("location.href = 'http://localhost:9000/mycgv_jsp/login/login.jsp';");
-			out.write("</script>");
-		} else {
-		MemberDao memberDao = new MemberDao();
-		// 전체 리스트 가져오기
-		ArrayList<MemberVo> list = memberDao.select();
-%>  
+<%@ taglib uri="http://java.sun.com/jsp/jstl/core" prefix="c" %>
     
     
 <!DOCTYPE html>
@@ -36,8 +15,6 @@
 </head>
 <body>
 	<!-- header -->
-	<!-- <iframe src="http://localhost:9000/mycgv_jsp/header.jsp"
-			scrolling="no" width="100%" height="149px" frameborder=0></iframe> -->
 	<jsp:include page="../../header.jsp"></jsp:include>
 	
 	<!-- content -->
@@ -53,15 +30,15 @@
 					<th>회원등급</th>
 				</tr>
 				
-				<% for(MemberVo memberVo : list) { %>
-					<tr>
-						<td><%= memberVo.getRno() %></td>
-						<td><%= memberVo.getId() %></td>
-						<td><%= memberVo.getName() %></td>
-						<td><%= memberVo.getMdate() %></td>
-						<td><%= memberVo.getGrade() %></td>
-					</tr>
-				<% } %>
+				<c:forEach var="memberVo" items="${list}">
+						<tr>
+							<td>${memberVo.rno}</td>
+							<td>${memberVo.id}</td>
+							<td>${memberVo.name}</td>
+							<td>${memberVo.mdate}</td>
+							<td>${memberVo.grade}</td>
+						</tr>
+				</c:forEach>
 				
 				<tr>
 					<td colspan="5"><< 1  2  3  4  5 >></td>
@@ -71,12 +48,7 @@
 	</div>
 	
 	<!-- footer -->
-	<!-- <iframe src="http://localhost:9000/mycgv_jsp/footer.jsp"
-			scrolling="no" width="100%" height="500px" frameborder=0></iframe> -->	
 	<jsp:include page="../../footer.jsp"></jsp:include>
 </body>
 </html>
-
-<% }} %>
-
 

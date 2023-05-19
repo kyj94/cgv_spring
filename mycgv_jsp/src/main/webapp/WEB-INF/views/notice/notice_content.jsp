@@ -18,22 +18,19 @@
 			<table class="notice_content">
 				<tr>
 					<th>제목</th>
-					<td>CGV 공지사항 입니다.</td>
+					<td>${notice.ntitle}</td>
 				</tr>
 				<tr>
 					<th>내용</th>
-					<td>
-						2023년 4월 기준 전체 시스템 점검 예정입니다.<br>
-						참고해주세요.
-					</td>
+					<td>${notice.ncontent}</td>
 				</tr>
 				<tr>
 					<th>조회수</th>
-					<td>1000</td>
+					<td>${notice.nhits}</td>
 				</tr>
 				<tr>
 					<th>작성일자</th>
-					<td>2023-04-18</td>
+					<td>${notice.ndate}</td>
 				</tr>
 				<tr>
 					<td colspan="2">
