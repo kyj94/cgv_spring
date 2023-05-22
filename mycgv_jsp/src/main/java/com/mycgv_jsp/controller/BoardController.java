@@ -86,7 +86,7 @@ public class BoardController {
 		// 조회수 업데이트-DB
 		if(boardVo != null) {
 			boardDao.updateHits(bid);
-		}
+		} // 조회수 업데이트-DB
 		
 		model.addObject("bvo", boardVo);
 		model.setViewName("/board/board_content");
