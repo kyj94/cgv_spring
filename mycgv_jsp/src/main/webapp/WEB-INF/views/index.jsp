@@ -7,6 +7,7 @@
 	<meta charset="UTF-8">
 	<title>MYCGV</title>
 	<link rel="stylesheet" href="http://localhost:9000/mycgv_jsp/css/mycgv_jsp.css">
+	
 	<style type="text/css">
 	
 	</style>
