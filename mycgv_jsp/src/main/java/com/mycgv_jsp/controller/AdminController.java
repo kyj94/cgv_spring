@@ -23,17 +23,62 @@ public class AdminController {
 	
 	
 	/** admin_notice_list.do - 관리자 공지사항 리스트  **/
+	/*
+	 * @RequestMapping(value="/admin_notice_list.do", method=RequestMethod.GET)
+	 * public ModelAndView admin_notice_list() { ModelAndView model = new
+	 * ModelAndView(); AdminNoticeDao adminNoticeDao = new AdminNoticeDao();
+	 * ArrayList<AdminNoticeVo> list = adminNoticeDao.select();
+	 * 
+	 * model.addObject("list", list);
+	 * model.setViewName("/admin/notice/admin_notice_list");
+	 * 
+	 * return model; }
+	 */
+	
+	
+	/** admin_notice_list.do - 관리자 공지사항 리스트_페이징  **/
 	@RequestMapping(value="/admin_notice_list.do", method=RequestMethod.GET)
-	public ModelAndView admin_notice_list() {
+	public ModelAndView admin_notice_list(String page) {
 		ModelAndView model = new ModelAndView();
 		AdminNoticeDao adminNoticeDao = new AdminNoticeDao();
-		ArrayList<AdminNoticeVo> list = adminNoticeDao.select();
 		
-		model.addObject("list", list);
-		model.setViewName("/admin/notice/admin_notice_list");
+		//페이징 처리 - startCount, endCount 구하기
+				int startCount = 0;
+				int endCount = 0;
+				int pageSize = 5;	//한페이지당 게시물 수
+				int reqPage = 1;	//요청페이지	
+				int pageCount = 1;	//전체 페이지 수
+				int dbCount = adminNoticeDao.totalRowCount();	//DB에서 가져온 전체 행수
+				
+				//총 페이지 수 계산
+				if(dbCount % pageSize == 0){
+					pageCount = dbCount/pageSize;
+				}else{
+					pageCount = dbCount/pageSize+1;
+				}
+
+				//요청 페이지 계산
+				if(page != null){
+					reqPage = Integer.parseInt(page);
+					startCount = (reqPage-1) * pageSize+1; 
+					endCount = reqPage * pageSize;
+				}else{
+					startCount = 1;
+					endCount = pageSize;
+				}
+				
+				ArrayList<AdminNoticeVo> list = adminNoticeDao.select(startCount, endCount);
 		
-		return model;
-	}
+				model.addObject("list", list);
+				model.addObject("totals", dbCount);
+				model.addObject("pageSize", pageSize);
+				model.addObject("maxSize", pageCount);
+				model.addObject("page", reqPage);
+				
+				model.setViewName("/admin/notice/admin_notice_list");
+		
+			return model;
+		}
 	
 	
 	/** admin_notice_content.do - 관리자 공지사항 내용  **/
@@ -140,16 +185,66 @@ public class AdminController {
 	
 	
 	/** admin_member_list.do - 관리자 회원관리 리스트  **/
+	/*
+	 * @RequestMapping(value="/admin_member_list.do", method=RequestMethod.GET)
+	 * public ModelAndView admin_member_list() { ModelAndView model = new
+	 * ModelAndView(); MemberDao memberDao = new MemberDao(); ArrayList<MemberVo>
+	 * list = memberDao.select();
+	 * 
+	 * model.addObject("list", list);
+	 * model.setViewName("/admin/member/admin_member_list");
+	 * 
+	 * return model; }
+	 */
+	
+	
+	/** admin_member_list.do - 관리자 회원관리 리스트  **/
 	@RequestMapping(value="/admin_member_list.do", method=RequestMethod.GET)
-	public ModelAndView admin_member_list() {
+	public ModelAndView admin_member_list(String page) {
 		ModelAndView model = new ModelAndView();
 		MemberDao memberDao = new MemberDao();
-		ArrayList<MemberVo> list = memberDao.select();
+		
+		//페이징 처리 - startCount, endCount 구하기
+		int startCount = 0;
+		int endCount = 0;
+		int pageSize = 5;	//한페이지당 게시물 수
+		int reqPage = 1;	//요청페이지	
+		int pageCount = 1;	//전체 페이지 수
+		int dbCount = memberDao.totalRowCount();	//DB에서 가져온 전체 행수
+		
+		//총 페이지 수 계산
+		if(dbCount % pageSize == 0){
+			pageCount = dbCount/pageSize;
+		}else{
+			pageCount = dbCount/pageSize+1;
+		}
+
+		//요청 페이지 계산
+		if(page != null){
+			reqPage = Integer.parseInt(page);
+			startCount = (reqPage-1) * pageSize+1; 
+			endCount = reqPage * pageSize;
+		}else{
+			startCount = 1;
+			endCount = pageSize;
+		}
+		
+		ArrayList<MemberVo> list = memberDao.select(startCount, endCount);
 		
 		model.addObject("list", list);
+		model.addObject("totals", dbCount);
+		model.addObject("pageSize", pageSize);
+		model.addObject("maxSize", pageCount);
+		model.addObject("page", reqPage);
+		
 		model.setViewName("/admin/member/admin_member_list");
 		
 		return model;
 	}
+	
+	
+	
+	
+	
 	
 } // class

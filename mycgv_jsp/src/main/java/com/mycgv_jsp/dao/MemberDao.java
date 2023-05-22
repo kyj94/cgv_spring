@@ -2,6 +2,7 @@ package com.mycgv_jsp.dao;
 
 import java.util.ArrayList;
 
+import com.mycgv_jsp.vo.AdminNoticeVo;
 import com.mycgv_jsp.vo.MemberVo;
 
 public class MemberDao extends DBConn {
@@ -111,6 +112,62 @@ public class MemberDao extends DBConn {
 		
 		return list;
 	} // ArrayList<MemberVo> select()
+	
+	
+	/** 전체 카운트 가져오기 _ 페이징 처리 **/
+	public int totalRowCount() {
+			int count = 0;
+			String sql = "select count(*) from mycgv_member";
+			getPreparedStatement(sql);
+			
+			try {
+				rs = pstmt.executeQuery();
+				while(rs.next()) {				
+					count = rs.getInt(1);
+				}			
+				
+			} catch (Exception e) {
+				e.printStackTrace();
+			}
+			
+			return count;		
+		} // int totalRowCount()
+	
+	
+	/** select - 게시글 전체 리스트 _ 페이징처리- startCount, endCount **/
+	public ArrayList<MemberVo> select(int startCount, int endCount) {
+		ArrayList<MemberVo> list = new ArrayList<MemberVo>();	
+		
+		String sql= "SELECT RNO, ID, PASS, NAME, GENDER, EMAIL, ADDR, TEL, PNUMBER, HOBBYLIST, INTRO, MDATE, GRADE" + 
+				" FROM (SELECT ROWNUM RNO, ID, PASS, NAME, GENDER, EMAIL, ADDR, TEL, PNUMBER, HOBBYLIST, INTRO, TO_CHAR(MDATE, 'YYYY-MM-DD') MDATE, GRADE" + 
+				"      FROM(SELECT * FROM MYCGV_MEMBER" + 
+				"            ORDER BY MDATE DESC))" + 
+				" WHERE RNO BETWEEN ? AND ?";
+		
+		getPreparedStatement(sql);
+		
+		try {
+			pstmt.setInt(1, startCount);
+			pstmt.setInt(2, endCount);
+			
+			rs = pstmt.executeQuery();
+			while(rs.next()) {
+				MemberVo memberVo = new MemberVo();
+				memberVo.setRno(rs.getInt(1));
+				memberVo.setId(rs.getString(2));
+				memberVo.setName(rs.getString(3));
+				memberVo.setMdate(rs.getString(4));
+				memberVo.setGrade(rs.getString(5));
+
+				list.add(memberVo);
+			}
+			
+		} catch (Exception e) {
+			e.printStackTrace();
+		}
+		
+		return list;
+	} // ArrayList<MemberVo> select(int startCount, int endCount)
 	
 	
 

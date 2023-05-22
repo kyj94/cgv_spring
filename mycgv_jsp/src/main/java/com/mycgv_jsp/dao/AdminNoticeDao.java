@@ -3,6 +3,7 @@ package com.mycgv_jsp.dao;
 import java.util.ArrayList;
 
 import com.mycgv_jsp.vo.AdminNoticeVo;
+import com.mycgv_jsp.vo.BoardVo;
 
 public class AdminNoticeDao extends DBConn {
 
@@ -34,6 +35,44 @@ public class AdminNoticeDao extends DBConn {
 
 		return list;
 	} // ArrayList<AdminNoticeVo> select()
+	
+	
+	/** select - 게시글 전체 리스트 _ 페이징처리- startCount, endCount **/
+	public ArrayList<AdminNoticeVo> select(int startCount, int endCount) {
+		ArrayList<AdminNoticeVo> list = new ArrayList<AdminNoticeVo>();	
+		
+		String sql= "SELECT RNO, NID, NTITLE, NCONTENT, NHITS, NDATE" + 
+				" FROM (SELECT ROWNUM RNO, NID, NTITLE, NCONTENT, NHITS, TO_CHAR(NDATE, 'YYYY-MM-DD') NDATE" + 
+				"      FROM (SELECT * FROM MYCGV_ADMIN_NOTICE" + 
+				"            ORDER BY NDATE DESC))" + 
+				" WHERE RNO BETWEEN ? AND ?";
+		
+		getPreparedStatement(sql);
+		
+		try {
+			pstmt.setInt(1, startCount);
+			pstmt.setInt(2, endCount);
+			
+			rs = pstmt.executeQuery();
+			while(rs.next()) {
+				AdminNoticeVo adminNoticeVo = new AdminNoticeVo();
+				adminNoticeVo.setRno(rs.getInt(1));
+				adminNoticeVo.setNid(rs.getString(2));
+				adminNoticeVo.setNtitle(rs.getString(3));
+				adminNoticeVo.setNcontent(rs.getString(4));
+				adminNoticeVo.setNhits(rs.getInt(5));
+				adminNoticeVo.setNdate(rs.getString(6));
+
+				list.add(adminNoticeVo);
+			}
+			
+		} catch (Exception e) {
+			e.printStackTrace();
+		}
+		
+		return list;
+	} // ArrayList<BoardVo> select()
+	
 
 	/** select(bid) - 공지사항 상세보기 **/
 	public AdminNoticeVo select(String nid) {
@@ -133,6 +172,27 @@ public class AdminNoticeDao extends DBConn {
 		  } catch (Exception e) { e.printStackTrace(); } 
 	  } 
 		// void updateHits(String nid)
+		
+		
+		/** 전체 카운트 가져오기 _ 페이징 처리 **/
+		public int totalRowCount() {
+				int count = 0;
+				String sql = "select count(*) from mycgv_admin_notice";
+				getPreparedStatement(sql);
+				
+				try {
+					rs = pstmt.executeQuery();
+					while(rs.next()) {				
+						count = rs.getInt(1);
+					}			
+					
+				} catch (Exception e) {
+					e.printStackTrace();
+				}
+				
+				return count;		
+			} // int totalRowCount()
+		
 	
 
 }
