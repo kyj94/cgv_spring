@@ -14,7 +14,6 @@ public interface BoardService {
 	public int getUpdate(BoardVo boardVo); 
 	public int getDelete(String bid);
 	public int getTotalRowCount();
-	
 	public int getUdpateHits(String bid);
 
 }

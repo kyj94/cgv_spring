@@ -154,8 +154,6 @@ public class BoardController {
 	@RequestMapping(value="/board_content.do", method=RequestMethod.GET)
 	public ModelAndView board_content(String bid) {
 		ModelAndView model = new ModelAndView();
-		
-		/* BoardDao boardDao = new BoardDao(); */
 		BoardVo boardVo = boardService.getBid(bid);
 		
 		// 조회수 업데이트-DB
@@ -168,6 +166,7 @@ public class BoardController {
 		
 		return model;
 	}
+	
 	
 	/** board_write.do - 게시글쓰기 **/
 	@RequestMapping(value="/board_write.do", method=RequestMethod.GET)
@@ -184,7 +183,6 @@ public class BoardController {
 		// 3. mycgv_board 데이블에 insert
 		
 		String viewName = "";
-		/* BoardDao boardDao = new BoardDao(); */
 		int result = boardService.getWrite(boardVo);
 		
 		if(result == 1) {
@@ -203,7 +201,6 @@ public class BoardController {
 	@RequestMapping(value="/board_update.do", method=RequestMethod.GET)
 	public ModelAndView board_update(String bid) {
 		ModelAndView model = new ModelAndView();
-		/* BoardDao boardDao = new BoardDao(); */
 		BoardVo boardVo = boardService.getBid(bid);
 		
 		model.addObject("boardVo", boardVo);
@@ -217,8 +214,6 @@ public class BoardController {
 	@RequestMapping(value="/board_update_proc.do", method=RequestMethod.POST)
 	public String board_update_proc(BoardVo boardVo) {
 		String viewName = "";
-		
-		/* BoardDao boardDao = new BoardDao(); */
 		int result = boardService.getUpdate(boardVo);
 		
 		if(result == 1) {
@@ -245,8 +240,6 @@ public class BoardController {
 	@RequestMapping(value="/board_delete_proc.do", method=RequestMethod.POST)
 	public String board_delete_proc(String bid) {
 		String viewName = "";
-		
-		/* BoardDao boardDao = new BoardDao(); */
 		int result = boardService.getDelete(bid);
 		
 		if(result == 1) {

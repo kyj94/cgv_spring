@@ -26,8 +26,6 @@
 	<!-- Service -->
 	<beans:bean id="memberService" class="com.mycgv_jsp.service.MemberServiceImpl">
 	</beans:bean>
-	
-	<!-- Service -->
 	<beans:bean id="boardService" class="com.mycgv_jsp.service.BoardServiceImpl">
 	</beans:bean>
 	
