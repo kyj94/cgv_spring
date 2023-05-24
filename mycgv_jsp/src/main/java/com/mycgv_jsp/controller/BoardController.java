@@ -2,6 +2,7 @@ package com.mycgv_jsp.controller;
 
 import java.util.ArrayList;
 
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
@@ -11,11 +12,14 @@ import org.springframework.web.servlet.ModelAndView;
 import com.google.gson.Gson;
 import com.google.gson.JsonArray;
 import com.google.gson.JsonObject;
-import com.mycgv_jsp.dao.BoardDao;
+import com.mycgv_jsp.service.BoardService;
 import com.mycgv_jsp.vo.BoardVo;
 
 @Controller
 public class BoardController {
+	
+	@Autowired
+	private BoardService boardService;
 	
 	/** board_list.do - 게시글 전체 리스트 **/
 	/*
@@ -37,8 +41,8 @@ public class BoardController {
 	 */
 	@RequestMapping(value="/board_list.do", method=RequestMethod.GET)
 	public ModelAndView board_list(String page) { // 요청하는 페이지
-		ModelAndView model = new ModelAndView();		
-		BoardDao boardDao = new BoardDao();
+		ModelAndView model = new ModelAndView();	
+		/* BoardDao boardDao = new BoardDao(); */
 		
 		//페이징 처리 - startCount, endCount 구하기
 		int startCount = 0;
@@ -46,7 +50,7 @@ public class BoardController {
 		int pageSize = 10;	//한페이지당 게시물 수
 		int reqPage = 1;	//요청페이지	
 		int pageCount = 1;	//전체 페이지 수
-		int dbCount = boardDao.totalRowCount();	//DB에서 가져온 전체 행수
+		int dbCount = boardService.getTotalRowCount();	//DB에서 가져온 전체 행수
 		
 		//총 페이지 수 계산
 		if(dbCount % pageSize == 0){
@@ -65,7 +69,7 @@ public class BoardController {
 			endCount = pageSize;
 		}
 		
-		ArrayList<BoardVo> list = boardDao.select(startCount, endCount);
+		ArrayList<BoardVo> list = boardService.getList(startCount, endCount);
 	
 		model.addObject("list", list);
 		model.addObject("totals", dbCount);
@@ -83,7 +87,7 @@ public class BoardController {
 	@RequestMapping(value="/board_list_json_data.do", method=RequestMethod.GET, produces="text/plain;charset=UTF-8")
 	@ResponseBody
 	public String board_list_json_data(String page) {
-		BoardDao boardDao = new BoardDao();
+		/* BoardDao boardDao = new BoardDao(); */
 		
 		//페이징 처리 - startCount, endCount 구하기
 				int startCount = 0;
@@ -91,7 +95,7 @@ public class BoardController {
 				int pageSize = 5;	//한페이지당 게시물 수
 				int reqPage = 1;	//요청페이지	
 				int pageCount = 1;	//전체 페이지 수
-				int dbCount = boardDao.totalRowCount();	//DB에서 가져온 전체 행수
+				int dbCount = boardService.getTotalRowCount();	//DB에서 가져온 전체 행수
 				
 				//총 페이지 수 계산
 				if(dbCount % pageSize == 0){
@@ -110,7 +114,7 @@ public class BoardController {
 					endCount = pageSize;
 				}
 				
-				ArrayList<BoardVo> list = boardDao.select(startCount, endCount);
+				ArrayList<BoardVo> list = boardService.getList(startCount, endCount);
 				
 				// list 객체의 데이터를 JSON 형태로 생성
 				JsonObject jlist = new JsonObject();
@@ -151,12 +155,12 @@ public class BoardController {
 	public ModelAndView board_content(String bid) {
 		ModelAndView model = new ModelAndView();
 		
-		BoardDao boardDao = new BoardDao();
-		BoardVo boardVo = boardDao.select(bid);
+		/* BoardDao boardDao = new BoardDao(); */
+		BoardVo boardVo = boardService.getBid(bid);
 		
 		// 조회수 업데이트-DB
 		if(boardVo != null) {
-			boardDao.updateHits(bid);
+			boardService.getUdpateHits(bid);
 		} // 조회수 업데이트-DB
 		
 		model.addObject("bvo", boardVo);
@@ -180,8 +184,8 @@ public class BoardController {
 		// 3. mycgv_board 데이블에 insert
 		
 		String viewName = "";
-		BoardDao boardDao = new BoardDao();
-		int result = boardDao.insert(boardVo);
+		/* BoardDao boardDao = new BoardDao(); */
+		int result = boardService.getWrite(boardVo);
 		
 		if(result == 1) {
 			// response.sendRedirect("http://localhost:9000/mycgv_jsp/board/board_list.jsp");
@@ -199,8 +203,8 @@ public class BoardController {
 	@RequestMapping(value="/board_update.do", method=RequestMethod.GET)
 	public ModelAndView board_update(String bid) {
 		ModelAndView model = new ModelAndView();
-		BoardDao boardDao = new BoardDao();
-		BoardVo boardVo = boardDao.select(bid);
+		/* BoardDao boardDao = new BoardDao(); */
+		BoardVo boardVo = boardService.getBid(bid);
 		
 		model.addObject("boardVo", boardVo);
 		model.setViewName("/board/board_update");
@@ -214,8 +218,8 @@ public class BoardController {
 	public String board_update_proc(BoardVo boardVo) {
 		String viewName = "";
 		
-		BoardDao boardDao = new BoardDao();
-		int result = boardDao.update(boardVo);
+		/* BoardDao boardDao = new BoardDao(); */
+		int result = boardService.getUpdate(boardVo);
 		
 		if(result == 1) {
 			viewName = "redirect:/board_list.do";
@@ -242,8 +246,8 @@ public class BoardController {
 	public String board_delete_proc(String bid) {
 		String viewName = "";
 		
-		BoardDao boardDao = new BoardDao();
-		int result = boardDao.delete(bid);
+		/* BoardDao boardDao = new BoardDao(); */
+		int result = boardService.getDelete(bid);
 		
 		if(result == 1) {
 			viewName = "redirect:/board_list.do";

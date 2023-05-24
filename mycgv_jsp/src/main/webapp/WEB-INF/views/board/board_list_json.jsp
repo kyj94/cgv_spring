@@ -17,31 +17,6 @@
 <script src="http://localhost:9000/mycgv_jsp/js/am-pagination.js"></script>
 <script src="http://localhost:9000/mycgv_jsp/js/mycgv_board_list.js"></script>
 
-<script>
-	$(document).ready(function(){
-		var pager = jQuery('#ampaginationsm').pagination({
-		
-		    maxSize: '${maxSize}',	    		// max page size
-		    totals: '${totals}',	// total pages	
-		    page: '${page}',		// initial page		
-		    pageSize: '${pageSize}',			// max number items per page
-		
-		    // custom labels		
-		    lastText: '&raquo;&raquo;', 		
-		    firstText: '&laquo;&laquo;',		
-		    prevText: '&laquo;',		
-		    nextText: '&raquo;',
-				     
-		    btnSize:'sm'	// 'sm'  or 'lg'		
-		});
-		
-		jQuery('#ampaginationsm').on('am.pagination.change',function(e){
-			   jQuery('.showlabelsm').text('The selected page no: '+e.page);
-	           $(location).attr('href', "http://localhost:9000/mycgv_jsp/board_list_json.do?page="+e.page);         
-	    });
-		
- 	});
-</script> 
 
 </head>
 <body>

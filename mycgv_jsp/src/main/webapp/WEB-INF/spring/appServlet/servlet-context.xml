@@ -23,6 +23,14 @@
 		<beans:property name="suffix" value=".jsp" />
 	</beans:bean>
 	
+	<!-- Service -->
+	<beans:bean id="memberService" class="com.mycgv_jsp.service.MemberServiceImpl">
+	</beans:bean>
+	
+	<!-- Service -->
+	<beans:bean id="boardService" class="com.mycgv_jsp.service.BoardServiceImpl">
+	</beans:bean>
+	
 	<context:component-scan base-package="com.mycgv_jsp.controller" />
 	
 </beans:beans>

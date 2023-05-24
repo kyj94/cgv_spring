@@ -155,9 +155,16 @@ public class MemberDao extends DBConn {
 				MemberVo memberVo = new MemberVo();
 				memberVo.setRno(rs.getInt(1));
 				memberVo.setId(rs.getString(2));
-				memberVo.setName(rs.getString(3));
-				memberVo.setMdate(rs.getString(4));
-				memberVo.setGrade(rs.getString(5));
+				memberVo.setPass(rs.getString(3));
+				memberVo.setName(rs.getString(4));
+				memberVo.setGender(rs.getString(5));
+				memberVo.setEmail(rs.getString(6));
+				memberVo.setAddr(rs.getString(7));
+				memberVo.setTel(rs.getString(8));
+				memberVo.setPnumber(rs.getString(9));
+				memberVo.setMdate(rs.getString(12));
+				memberVo.setGrade(rs.getString(13));
+				
 
 				list.add(memberVo);
 			}

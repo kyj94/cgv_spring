@@ -1,16 +1,20 @@
 package com.mycgv_jsp.controller;
 
-
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.servlet.ModelAndView;
 
-import com.mycgv_jsp.dao.MemberDao;
+import com.mycgv_jsp.service.MemberService;
 import com.mycgv_jsp.vo.MemberVo;
 
 @Controller
 public class LoginController {
+	
+	@Autowired
+	private MemberService memberService;
+	
 	/**
 	 * login.do - 로그인 폼
 	 */
@@ -19,12 +23,12 @@ public class LoginController {
 		return "/login/login";
 	}
 	
+	
 	/** login_proc.do - 로그인 처리 **/
 	@RequestMapping(value="login_proc.do", method=RequestMethod.POST)
 	public ModelAndView login_proc(MemberVo memberVo) {
 		ModelAndView model = new ModelAndView();
-		MemberDao memberDao = new MemberDao();
-		int result = memberDao.loginCheck(memberVo);
+		int result = memberService.getLoginResult(memberVo);
 		
 		if(result == 1) {
 			// index 이동
