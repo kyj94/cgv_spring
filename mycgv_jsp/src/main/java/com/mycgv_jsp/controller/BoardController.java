@@ -1,6 +1,7 @@
 package com.mycgv_jsp.controller;
 
 import java.util.ArrayList;
+import java.util.Map;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
@@ -13,6 +14,7 @@ import com.google.gson.Gson;
 import com.google.gson.JsonArray;
 import com.google.gson.JsonObject;
 import com.mycgv_jsp.service.BoardService;
+import com.mycgv_jsp.service.PageServiceImpl;
 import com.mycgv_jsp.vo.BoardVo;
 
 @Controller
@@ -20,6 +22,8 @@ public class BoardController {
 	
 	@Autowired
 	private BoardService boardService;
+	@Autowired
+	private PageServiceImpl pageService;
 	
 	/** board_list.do - 게시글 전체 리스트 **/
 	/*
@@ -42,40 +46,14 @@ public class BoardController {
 	@RequestMapping(value="/board_list.do", method=RequestMethod.GET)
 	public ModelAndView board_list(String page) { // 요청하는 페이지
 		ModelAndView model = new ModelAndView();	
-		/* BoardDao boardDao = new BoardDao(); */
-		
-		//페이징 처리 - startCount, endCount 구하기
-		int startCount = 0;
-		int endCount = 0;
-		int pageSize = 10;	//한페이지당 게시물 수
-		int reqPage = 1;	//요청페이지	
-		int pageCount = 1;	//전체 페이지 수
-		int dbCount = boardService.getTotalRowCount();	//DB에서 가져온 전체 행수
-		
-		//총 페이지 수 계산
-		if(dbCount % pageSize == 0){
-			pageCount = dbCount/pageSize;
-		}else{
-			pageCount = dbCount/pageSize+1;
-		}
-
-		//요청 페이지 계산
-		if(page != null){
-			reqPage = Integer.parseInt(page);
-			startCount = (reqPage-1) * pageSize+1; 
-			endCount = reqPage * pageSize;
-		}else{
-			startCount = 1;
-			endCount = pageSize;
-		}
-		
-		ArrayList<BoardVo> list = boardService.getList(startCount, endCount);
+		Map<String, Integer> param = pageService.getPageResult(page, "board");
+		ArrayList<BoardVo> list = boardService.getList(param.get("startCount"), param.get("endCount"));
 	
 		model.addObject("list", list);
-		model.addObject("totals", dbCount);
-		model.addObject("pageSize", pageSize);
-		model.addObject("maxSize", pageCount);
-		model.addObject("page", reqPage);
+		model.addObject("totals", param.get("dbCount"));
+		model.addObject("pageSize", param.get("pageSize"));
+		model.addObject("maxSize", param.get("maxSize"));
+		model.addObject("page", param.get("page"));
 		
 		model.setViewName("/board/board_list");
 		
@@ -87,60 +65,34 @@ public class BoardController {
 	@RequestMapping(value="/board_list_json_data.do", method=RequestMethod.GET, produces="text/plain;charset=UTF-8")
 	@ResponseBody
 	public String board_list_json_data(String page) {
-		/* BoardDao boardDao = new BoardDao(); */
+		Map<String, Integer> param = pageService.getPageResult(page, "board");
+		ArrayList<BoardVo> list = boardService.getList(param.get("startCount"), param.get("endCount"));
 		
-		//페이징 처리 - startCount, endCount 구하기
-				int startCount = 0;
-				int endCount = 0;
-				int pageSize = 5;	//한페이지당 게시물 수
-				int reqPage = 1;	//요청페이지	
-				int pageCount = 1;	//전체 페이지 수
-				int dbCount = boardService.getTotalRowCount();	//DB에서 가져온 전체 행수
-				
-				//총 페이지 수 계산
-				if(dbCount % pageSize == 0){
-					pageCount = dbCount/pageSize;
-				}else{
-					pageCount = dbCount/pageSize+1;
-				}
-
-				//요청 페이지 계산
-				if(page != null){
-					reqPage = Integer.parseInt(page);
-					startCount = (reqPage-1) * pageSize+1; 
-					endCount = reqPage * pageSize;
-				}else{
-					startCount = 1;
-					endCount = pageSize;
-				}
-				
-				ArrayList<BoardVo> list = boardService.getList(startCount, endCount);
-				
-				// list 객체의 데이터를 JSON 형태로 생성
-				JsonObject jlist = new JsonObject();
-				JsonArray jarray = new JsonArray();
-				
-				for(BoardVo boardVo : list) {
-					JsonObject jobj = new JsonObject(); //{}
-					jobj.addProperty("rno", boardVo.getRno()); // {rno:1}
-					jobj.addProperty("btitle", boardVo.getBtitle()); //{rno:1, btitle:~~~}
-					jobj.addProperty("bhits", boardVo.getBhits());
-					jobj.addProperty("id", boardVo.getId());
-					jobj.addProperty("bdate", boardVo.getBdate());
-					
-					jarray.add(jobj);
-				}
-				
-				jlist.add("jlist", jarray); // = model.addObject("list", list); 
-				jlist.addProperty("totals", dbCount); // = model.addObject("totals", dbCount);
-				jlist.addProperty("pageSize", pageSize); // = model.addObject("pageSize", pageSize);
-				jlist.addProperty("maxSize", pageCount); // = model.addObject("maxSize", pageCount);
-				jlist.addProperty("page", reqPage); // = model.addObject("page", reqPage);
-				
-				/* System.out.println(jlist.toString()); */
-				
-				return new Gson().toJson(jlist);
-			} 
+		// list 객체의 데이터를 JSON 형태로 생성
+		JsonObject jlist = new JsonObject();
+		JsonArray jarray = new JsonArray();
+		
+		for(BoardVo boardVo : list) {
+			JsonObject jobj = new JsonObject(); //{}
+			jobj.addProperty("rno", boardVo.getRno()); // {rno:1}
+			jobj.addProperty("btitle", boardVo.getBtitle()); //{rno:1, btitle:~~~}
+			jobj.addProperty("bhits", boardVo.getBhits());
+			jobj.addProperty("id", boardVo.getId());
+			jobj.addProperty("bdate", boardVo.getBdate());
+			
+			jarray.add(jobj);
+		}
+		
+		jlist.add("jlist", jarray); // = model.addObject("list", list); 
+		jlist.addProperty("totals", param.get("dbCount")); // = model.addObject("totals", dbCount);
+		jlist.addProperty("pageSize", param.get("pageSize")); // = model.addObject("pageSize", pageSize);
+		jlist.addProperty("maxSize", param.get("maxSize")); // = model.addObject("maxSize", pageCount);
+		jlist.addProperty("page", param.get("page")); // = model.addObject("page", reqPage);
+		
+		/* System.out.println(jlist.toString()); */
+		
+		return new Gson().toJson(jlist);
+	} 
 	
 	
 	// header 게시판(JSON) 호출되는 주소

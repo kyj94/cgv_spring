@@ -18,7 +18,6 @@ public class NoticeController {
 	
 	@Autowired
 	private NoticeService noticeService;
-	
 	@Autowired
 	private PageServiceImpl pageService;
 	
