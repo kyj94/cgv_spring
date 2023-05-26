@@ -1,5 +1,6 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8"
     pageEncoding="UTF-8"%>
+<%@ taglib uri="http://java.sun.com/jsp/jstl/core" prefix="c" %>    
     
 
 <!DOCTYPE html>
@@ -24,8 +25,14 @@
 				</tr>
 				<tr>
 					<th>내용</th>
-					<td>${bvo.bcontent}</td>
+					<td>${bvo.bcontent}<br><br><br>
+						<c:if test="${bvo.bsfile != null}">
+						<img src="http://localhost:9000/mycgv_jsp/upload/${bvo.bsfile}">
+						</c:if>
+					</td>
 				</tr>
+				
+				
 				<tr>
 					<th>조회수</th>
 					<td>${bvo.bhits}</td>

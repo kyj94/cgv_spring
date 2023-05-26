@@ -10,8 +10,8 @@ public class BoardDao extends DBConn {
 	public int insert(BoardVo boardVo) {
 		int result = 0;
 		
-		String sql = "INSERT INTO MYCGV_BOARD(bid, btitle, bcontent, bhits, id, bdate) "
-				+ " VALUES ('b_'||LTRIM(to_char(sequ_mycgv_board.nextVal, '0000')), ?, ?, 0, ?, sysdate)";
+		String sql = "INSERT INTO MYCGV_BOARD(bid, btitle, bcontent, bhits, id, bdate, bfile, bsfile) "
+				+ " VALUES ('b_'||LTRIM(to_char(sequ_mycgv_board.nextVal, '0000')), ?, ?, 0, ?, sysdate, ?, ?)";
 		
 		getPreparedStatement(sql);
 		
@@ -19,15 +19,18 @@ public class BoardDao extends DBConn {
 			pstmt.setString(1, boardVo.getBtitle());
 			pstmt.setString(2, boardVo.getBcontent());
 			pstmt.setString(3, boardVo.getId());
+			pstmt.setString(4, boardVo.getBfile());
+			pstmt.setString(5, boardVo.getBsfile());
 			
 			result = pstmt.executeUpdate();
 			
 		} catch (Exception e) {
 			e.printStackTrace();
 		}		
-		return result;
 		
+		return result;
 	} // insert(BoardVo boardVo)
+	
 	
 	/** select - 게시글 전체 리스트 **/
 	public ArrayList<BoardVo> select() {
@@ -104,7 +107,7 @@ public class BoardDao extends DBConn {
 	public BoardVo select(String bid) {
 		BoardVo boardVo = new BoardVo();
 		
-		String sql= "SELECT BID, BTITLE, BCONTENT, BHITS, ID, BDATE" 
+		String sql= "SELECT BID, BTITLE, BCONTENT, BHITS, ID, BDATE, BFILE, BSFILE" 
 				+ " FROM MYCGV_BOARD" 
 				+ " WHERE BID = ?";
 		getPreparedStatement(sql);
@@ -120,6 +123,8 @@ public class BoardDao extends DBConn {
 				boardVo.setBhits(rs.getInt(4));
 				boardVo.setId(rs.getString(5));
 				boardVo.setBdate(rs.getString(6));
+				boardVo.setBfile(rs.getString(7));
+				boardVo.setBsfile(rs.getString(8));
 			}
 			
 		} catch (Exception e) {
