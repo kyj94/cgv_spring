@@ -8,7 +8,6 @@ import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.servlet.ModelAndView;
 
 import com.mycgv_jsp.service.MemberService;
-import com.mycgv_jsp.service.MemberServiceImpl;
 import com.mycgv_jsp.vo.MemberVo;
 
 @Controller
