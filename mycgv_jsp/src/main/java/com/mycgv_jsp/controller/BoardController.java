@@ -151,14 +151,14 @@ public class BoardController {
 			UUID uuid = UUID.randomUUID();
 			String bfile = boardVo.getFile1().getOriginalFilename();
 			String bsfile = uuid + "_" + bfile;
-			System.out.println(bfile);
-			System.out.println(bsfile);
-			System.out.println(root_path+attach_path);
+//			System.out.println(bfile);
+//			System.out.println(bsfile);
+//			System.out.println(root_path+attach_path);
 			
 			boardVo.setBfile(bfile);
 			boardVo.setBsfile(bsfile);
 		} else {
-			System.out.println("파일 없음");
+//			System.out.println("파일 없음");
 		}
 		
 		int result = boardService.getWrite(boardVo);

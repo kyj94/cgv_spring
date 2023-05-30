@@ -18,5 +18,12 @@
 				(#{id}, #{pass}, #{name}, #{gender}, #{email}, #{addr}, #{tel}, #{pnumber}, 
 				#{hobbyList}, #{intro}, sysdate, 'GOLD')
 	</insert>
+	
+	<select id="list" parameterType="map" resultType="com.mycgv_jsp.vo.MemberVo">
+		SELECT RNO, ID, PASS, NAME, GENDER, EMAIL, ADDR, TEL, PNUMBER, HOBBYLIST, INTRO, MDATE, GRADE
+			FROM (SELECT ROWNUM RNO, ID, PASS, NAME, GENDER, EMAIL, ADDR, TEL, PNUMBER, HOBBYLIST, INTRO, TO_CHAR(MDATE, 'YYYY-MM-DD') MDATE, GRADE
+				FROM (SELECT * FROM MYCGV_MEMBER ORDER BY MDATE DESC))
+				WHERE RNO BETWEEN #{start} AND #{end}
+	</select>
 
 </mapper>
