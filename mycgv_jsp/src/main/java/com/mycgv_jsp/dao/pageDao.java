@@ -1,5 +1,8 @@
 package com.mycgv_jsp.dao;
 
+import java.util.HashMap;
+import java.util.Map;
+
 import org.mybatis.spring.SqlSessionTemplate;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Repository;
@@ -12,7 +15,10 @@ public class pageDao {
 	
 	/** 전체 로우 카운트 가져오기 _ 페이징 처리 **/
 	public int totalRowCount(String sname) {
-		return sqlSession.selectOne("mapper.page.totalCount", sname);
+		Map<String, String> param = new HashMap<String, String>();
+		param.put("sname", sname);
+		
+		return sqlSession.selectOne("mapper.page.totalCount", param);
 		
 //			int count = 0;
 //			String sql = "select count(*) from mycgv_member";

@@ -6,18 +6,18 @@
     
 <mapper namespace="mapper.page">
 
-	<select id="count" parameterType="java.lang.String" resultType="int">
+	<select id="totalCount" parameterType="map" resultType="int">
 		select count(*) 
 		from 
-		<if test="sname == notice">
-			mycgv_notice
+		<if test='sname == "notice"'>
+			MYCGV_ADMIN_NOTICE
 		</if>
 		
-		<if test="sname == member">
+		<if test='sname == "member"'>
 			mycgv_member
 		</if>
 		
-		<if test="sname == board">
+		<if test='sname == "board"'>
 			mycgv_board
 		</if>			
 			
