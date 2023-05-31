@@ -5,16 +5,21 @@ import java.util.Map;
 
 import org.springframework.beans.factory.annotation.Autowired;
 
+import com.mycgv_jsp.dao.pageDao;
+
 public class PageServiceImpl {
 	
-	@Autowired
-	private NoticeService noticeService;
+//	@Autowired
+//	private NoticeService noticeService;
+//	
+//	@Autowired
+//	private MemberService memberService;
+//	
+//	@Autowired
+//	private BoardService boardService;
 	
 	@Autowired
-	private MemberService memberService;
-	
-	@Autowired
-	private BoardService boardService;
+	private pageDao pageDao;
 	
 	public Map<String, Integer> getPageResult(String page, String serviceName) {
 		Map<String, Integer> param = new HashMap<String, Integer>();
@@ -28,16 +33,19 @@ public class PageServiceImpl {
 		int pageCount = 1;	//전체 페이지 수
 		int dbCount = 0;	//DB에서 가져온 전체 행수
 		
+		dbCount = pageDao.totalRowCount(serviceName);
+		
 		if(serviceName.equals("notice")) {
 			// 메개변수serviceType을 noticeService 변환
 			/* noticeService = (NoticeService)serviceType; */
-			dbCount = noticeService.getTotalRowCount();
 			// pageSize = 3;
 		} else if(serviceName.equals("member")) {
-			dbCount = memberService.getTotalRowCount();
+//			dbCount = memberService.getTotalRowCount();
+//			dbCount = pageDao.totalRowCount(serviceName);
 			// pageSize = 5;
 		} else if(serviceName.equals("board")) {
-			dbCount = boardService.getTotalRowCount();
+//			dbCount = boardService.getTotalRowCount();
+//			dbCount = pageDao.totalRowCount(serviceName);
 			// pageSize = 10;
 		}
 		

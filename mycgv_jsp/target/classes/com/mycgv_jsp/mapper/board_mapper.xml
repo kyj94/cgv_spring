@@ -18,17 +18,17 @@
 			FROM(SELECT * FROM MYCGV_BOARD ORDER BY BDATE DESC)
 	</select>
 	
+		<select id="content" parameterType="java.lang.String" resultType="com.mycgv_jsp.vo.BoardVo">
+		SELECT BID, BTITLE, BCONTENT, BHITS, ID, BDATE, BFILE, BSFILE
+		FROM MYCGV_BOARD
+		WHERE BID = #{bid}
+	</select>	
+	
 	<insert id="insert" parameterType="com.mycgv_jsp.vo.BoardVo">
 		INSERT INTO MYCGV_BOARD(bid, btitle, bcontent, bhits, id, bdate, bfile, bsfile)
 			VALUES('b_'||LTRIM(to_char(sequ_mycgv_board.nextVal, '0000')), #{btitle}, 
 					#{bcontent}, 0, #{id}, sysdate, #{bfile, jdbcType=VARCHAR}, #{bsfile, jdbcType=VARCHAR})
 	</insert>
-	
-	<select id="content" parameterType="java.lang.String" resultType="com.mycgv_jsp.vo.BoardVo">
-		SELECT BID, BTITLE, BCONTENT, BHITS, ID, BDATE, BFILE, BSFILE
-		FROM MYCGV_BOARD
-		WHERE BID = #{bid}
-	</select>	
 	
 	<update id="update" parameterType="com.mycgv_jsp.vo.BoardVo">
 		update mycgv_board set btitle=#{btitle}, bcontent=#{bcontent} where bid=#{bid}
