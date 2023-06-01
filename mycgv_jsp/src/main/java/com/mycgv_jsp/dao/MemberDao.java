@@ -12,15 +12,21 @@ import org.springframework.stereotype.Repository;
 import com.mycgv_jsp.vo.MemberVo;
 
 @Repository
-public class MemberDao extends DBConn { // 부분수정 완료 수 extends 지울 예정
+public class MemberDao implements MycgvDao{ // 부분수정 완료 후 extends 지울 예정
 	
 	@Autowired
 	private SqlSessionTemplate sqlSession;
 	
 	/** insert - 회원 가입 **/
-	public int insert(MemberVo memberVo) {
-		return sqlSession.insert("mapper.member.join", memberVo);
-				
+//	public int insert(MemberVo memberVo) {
+//		return sqlSession.insert("mapper.member.join", memberVo);
+	
+	/** 상속 **/	
+	@Override
+	public int insert(Object memberVo) {
+		return sqlSession.insert("mapper.member.join", (MemberVo) memberVo);
+	
+		
 		/*
 		 * int result = 0; String sql =
 		 * "insert into MYCGV_MEMBER(id, pass, name, gender, email, addr, tel, pnumber, hobbylist, intro, mdate, grade)"
@@ -47,27 +53,26 @@ public class MemberDao extends DBConn { // 부분수정 완료 수 extends 지울 예정
 	
 	/** idCheck - 아이디 중복 체크 **/
 	public int idCheck(String id) {
-		int result = 0;
+		return sqlSession.selectOne("mapper.member.idcheck", id);
 		
-		String sql = "SELECT count(*) FROM MYCGV_MEMBER where id=?";
-		getPreparedStatement(sql);
+		/*
+		 * int result = 0;
+		 * 
+		 * String sql = "SELECT count(*) FROM MYCGV_MEMBER where id=?";
+		 * getPreparedStatement(sql);
+		 * 
+		 * try { pstmt.setString(1, id);
+		 * 
+		 * rs = pstmt.executeQuery();
+		 * 
+		 * while(rs.next()) { result = rs.getInt(1); }
+		 * 
+		 * } catch (Exception e) { e.printStackTrace(); }
+		 * 
+		 * return result;
+		 */
 		
-		try {
-			pstmt.setString(1,  id);
-			
-			rs = pstmt.executeQuery();
-			
-			while(rs.next()) {
-				result = rs.getInt(1);				
-			}
-			
-		} catch (Exception e) {
-			e.printStackTrace();
-		}
-		
-		return result;
-		
-	} // idCheck(MemberVo memberVo)
+	} // idCheck(String id)
 	
 	
 	/** loginCheck - 로그인 체크 **/
@@ -94,53 +99,35 @@ public class MemberDao extends DBConn { // 부분수정 완료 수 extends 지울 예정
 	
 	
 	/** select - 회원 전체 리스트 **/
-	public ArrayList<MemberVo> select() {
-		ArrayList<MemberVo> list = new ArrayList<MemberVo>();
-		
-		String sql= "SELECT ROWNUM RNO, ID, NAME, to_char(MDATE, 'yy-mm-dd') MDATE, GRADE " 
-					+ " FROM(SELECT * FROM MYCGV_MEMBER ORDER BY MDATE DESC)";
-		getPreparedStatement(sql);
-		
-		try {
-			rs = pstmt.executeQuery();
-			
-			while(rs.next()) {
-				MemberVo memberVo = new MemberVo();
-				memberVo.setRno(rs.getInt(1));
-				memberVo.setId(rs.getString(2));
-				memberVo.setName(rs.getString(3));
-				memberVo.setMdate(rs.getString(4));
-				memberVo.setGrade(rs.getString(5));
-				
-				list.add(memberVo);
-			}
-			
-		} catch (Exception e) {
-			e.printStackTrace();
-		}
-		
-		return list;
-	} // ArrayList<MemberVo> select()
+//	public ArrayList<MemberVo> select() {
+//		ArrayList<MemberVo> list = new ArrayList<MemberVo>();
+//		
+//		String sql= "SELECT ROWNUM RNO, ID, NAME, to_char(MDATE, 'yy-mm-dd') MDATE, GRADE " 
+//					+ " FROM(SELECT * FROM MYCGV_MEMBER ORDER BY MDATE DESC)";
+//		getPreparedStatement(sql);
+//		
+//		try {
+//			rs = pstmt.executeQuery();
+//			
+//			while(rs.next()) {
+//				MemberVo memberVo = new MemberVo();
+//				memberVo.setRno(rs.getInt(1));
+//				memberVo.setId(rs.getString(2));
+//				memberVo.setName(rs.getString(3));
+//				memberVo.setMdate(rs.getString(4));
+//				memberVo.setGrade(rs.getString(5));
+//				
+//				list.add(memberVo);
+//			}
+//			
+//		} catch (Exception e) {
+//			e.printStackTrace();
+//		}
+//		
+//		return list;
+//	} // ArrayList<MemberVo> select()
 	
 	
-	/** 전체 카운트 가져오기 _ 페이징 처리 **/
-	public int totalRowCount() {
-			int count = 0;
-			String sql = "select count(*) from mycgv_member";
-			getPreparedStatement(sql);
-			
-			try {
-				rs = pstmt.executeQuery();
-				while(rs.next()) {				
-					count = rs.getInt(1);
-				}			
-				
-			} catch (Exception e) {
-				e.printStackTrace();
-			}
-			
-			return count;		
-		} // int totalRowCount()
 	
 	
 	/** select - 회원 전체 리스트 _ 페이징처리- startCount, endCount **/

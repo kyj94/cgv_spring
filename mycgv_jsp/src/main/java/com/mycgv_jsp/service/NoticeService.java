@@ -11,6 +11,6 @@ public interface NoticeService {
 	public AdminNoticeVo Select(String nid);
 	public int getUpdate(AdminNoticeVo noticeVo); 
 	public int getDelete(String nid);
-	public int getTotalRowCount();
+//	public int getTotalRowCount();
 	public void getUdpateHits(String nid);
 }

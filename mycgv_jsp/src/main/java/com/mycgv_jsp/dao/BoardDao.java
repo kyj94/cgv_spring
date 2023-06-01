@@ -12,13 +12,19 @@ import org.springframework.stereotype.Repository;
 import com.mycgv_jsp.vo.BoardVo;
 
 @Repository
-public class BoardDao extends DBConn {
+public class BoardDao implements MycgvDao {
 	
 	@Autowired
 	private SqlSessionTemplate sqlSession; 
 	
 	/** 게시글 등록 **/
-	public int insert(BoardVo boardVo) {
+//	public int insert(BoardVo boardVo) {
+//		return sqlSession.insert("mapper.board.insert", boardVo);
+	
+	/** 상속 **/
+	@Override
+	public int insert(Object boardVo) {
+//		return sqlSession.insert("mapper.board.insert", (BoardVo) boardVo); // 형변환 명시!
 		return sqlSession.insert("mapper.board.insert", boardVo);
 		
 //		int result = 0;
@@ -238,24 +244,7 @@ public class BoardDao extends DBConn {
 	
 	
 	
-	/** 전체 카운트 가져오기 _ 페이징 처리 **/
-	public int totalRowCount() {
-			int count = 0;
-			String sql = "select count(*) from mycgv_board";
-			getPreparedStatement(sql);
-			
-			try {
-				rs = pstmt.executeQuery();
-				while(rs.next()) {				
-					count = rs.getInt(1);
-				}			
-				
-			} catch (Exception e) {
-				e.printStackTrace();
-			}
-			
-			return count;		
-		} // int totalRowCount()
+
 	
 	
 	

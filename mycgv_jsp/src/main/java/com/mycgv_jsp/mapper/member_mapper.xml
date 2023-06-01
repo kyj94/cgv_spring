@@ -25,5 +25,9 @@
 				FROM (SELECT * FROM MYCGV_MEMBER ORDER BY MDATE DESC))
 				WHERE RNO BETWEEN #{start} AND #{end}
 	</select>
+	
+	<select id="idcheck" parameterType="String" resultType="int">
+		SELECT count(*) FROM MYCGV_MEMBER where id=#{id}
+	</select>
 
 </mapper>

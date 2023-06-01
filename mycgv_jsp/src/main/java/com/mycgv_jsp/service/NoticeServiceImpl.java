@@ -3,11 +3,12 @@ package com.mycgv_jsp.service;
 import java.util.ArrayList;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.stereotype.Service;
 
 import com.mycgv_jsp.dao.AdminNoticeDao;
 import com.mycgv_jsp.vo.AdminNoticeVo;
 
-
+@Service("noticeService")
 public class NoticeServiceImpl implements NoticeService {
 	
 	@Autowired
@@ -38,10 +39,10 @@ public class NoticeServiceImpl implements NoticeService {
 		return noticeDao.delete(nid);
 	}
 	
-	@Override
-	public int getTotalRowCount() {
-		return noticeDao.totalRowCount();
-	}
+//	@Override
+//	public int getTotalRowCount() {
+//		return noticeDao.totalRowCount();
+//	}
 	
 	@Override
 	public void getUdpateHits(String nid) {

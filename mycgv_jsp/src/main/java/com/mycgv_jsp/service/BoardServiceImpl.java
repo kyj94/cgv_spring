@@ -3,13 +3,14 @@ package com.mycgv_jsp.service;
 import java.util.ArrayList;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.stereotype.Service;
 
 import com.mycgv_jsp.dao.BoardDao;
 import com.mycgv_jsp.vo.BoardVo;
 
+@Service("boardService")
 public class BoardServiceImpl implements BoardService {
 	
-	// private BoardDao boardDao = new BoardDao();
 	@Autowired
 	private BoardDao boardDao;
 	
@@ -38,10 +39,10 @@ public class BoardServiceImpl implements BoardService {
 		return boardDao.delete(bid);
 	}
 	
-	@Override
-	public int getTotalRowCount() {
-		return boardDao.totalRowCount();
-	}
+//	@Override
+//	public int getTotalRowCount() {
+//		return boardDao.totalRowCount();
+//	}
 	
 	@Override
 	public void getUdpateHits(String bid) {

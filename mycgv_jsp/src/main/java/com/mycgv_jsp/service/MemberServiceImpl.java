@@ -8,7 +8,7 @@ import org.springframework.stereotype.Service;
 import com.mycgv_jsp.dao.MemberDao;
 import com.mycgv_jsp.vo.MemberVo;
 
-@Service
+@Service("memberService")
 public class MemberServiceImpl implements MemberService {
 	
 	@Autowired
@@ -22,7 +22,7 @@ public class MemberServiceImpl implements MemberService {
 	
 	@Override
 	public String getIdCheckResult(String id) {
-		MemberDao memberDao = new MemberDao();
+		/* MemberDao memberDao = new MemberDao(); */
 		int result = memberDao.idCheck(id);
 		return String.valueOf(result);
 	} // 중복 아이디 체크
@@ -39,11 +39,11 @@ public class MemberServiceImpl implements MemberService {
 		return memberDao.select(startCount, endCount);
 	} // 회원관리 리스트
 	
-	@Override
-	public int getTotalRowCount() {
-		MemberDao memberDao = new MemberDao();
-		return memberDao.totalRowCount();
-	} // 페이징 처리
+//	@Override
+//	public int getTotalRowCount() {
+//		MemberDao memberDao = new MemberDao();
+//		return memberDao.totalRowCount();
+//	} // 페이징 처리
 	
 		
 }

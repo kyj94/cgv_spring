@@ -13,7 +13,6 @@ public interface BoardService {
 	public BoardVo getBid(String bid); // getSelect¿Í µ¿ÀÏ
 	public int getUpdate(BoardVo boardVo); 
 	public int getDelete(String bid);
-	public int getTotalRowCount();
+//	public int getTotalRowCount();
 	public void getUdpateHits(String bid);
-
 }

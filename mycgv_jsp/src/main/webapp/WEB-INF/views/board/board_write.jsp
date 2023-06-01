@@ -51,9 +51,9 @@
 						<td colspan="2">
 							<button type="button" class="btn_style" id="btnBoardWrite">등록완료</button>
 							<button type="reset" class="btn_style">다시쓰기</button>
-							<a href="board_list.jsp">
+							<a href="board_list.do">
 								<button type="button" class="btn_style">리스트</button></a>
-							<a href="http://localhost:9000/mycgv_jsp/index.jsp">
+							<a href="http://localhost:9000/mycgv_jsp/index.do">
 								<button type="button" class="btn_style">홈으로</button></a>
 						</td>				
 					</tr>

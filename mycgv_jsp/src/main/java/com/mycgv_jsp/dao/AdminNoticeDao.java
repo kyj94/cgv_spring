@@ -12,7 +12,7 @@ import org.springframework.stereotype.Repository;
 import com.mycgv_jsp.vo.AdminNoticeVo;
 
 @Repository
-public class AdminNoticeDao extends DBConn {
+public class AdminNoticeDao {
 	
 	@Autowired
 	private SqlSessionTemplate sqlSession;
@@ -205,27 +205,5 @@ public class AdminNoticeDao extends DBConn {
 //		  } catch (Exception e) { e.printStackTrace(); } 
 	  } 
 		// void updateHits(String nid)
-		
-		
-		/** 전체 카운트 가져오기 _ 페이징 처리 **/
-		public int totalRowCount() {
-				int count = 0;
-				String sql = "select count(*) from mycgv_admin_notice";
-				getPreparedStatement(sql);
-				
-				try {
-					rs = pstmt.executeQuery();
-					while(rs.next()) {				
-						count = rs.getInt(1);
-					}			
-					
-				} catch (Exception e) {
-					e.printStackTrace();
-				}
-				
-				return count;		
-			} // int totalRowCount()
-		
-	
 
 }
