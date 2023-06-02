@@ -13,9 +13,15 @@
 	</style>
 	<script>
 		let login_result = "${login_result}"; 
+		let logout_result = "${logout_result}"; 
 		if(login_result == 'OK') {
 			alert("로그인 성공");
 		}
+		if(logout_result == 'OK') {
+			alert("로그아웃 성공");
+		}
+		
+		
 	</script>
 	
 </head>

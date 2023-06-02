@@ -86,13 +86,16 @@ public class BoardDao implements MycgvDao {
 	
 	
 	/** select - 게시글 전체 리스트 _ 페이징처리- startCount, endCount **/
-	public ArrayList<BoardVo> select(int startCount, int endCount) {
+	@Override
+	public List<Object> select(int startCount, int endCount) {
 		Map<String, Integer> param = new HashMap<String, Integer>();
 		param.put("start", startCount);
 		param.put("end", endCount);
 		
-		List<BoardVo> list = sqlSession.selectList("mapper.board.list", param);
-		return (ArrayList<BoardVo>)list;
+		// List<BoardVo> list = sqlSession.selectList("mapper.board.list", param);
+		
+		return sqlSession.selectList("mapper.board.list", param);
+//		return (ArrayList<BoardVo>)list;
 		
 //		ArrayList<BoardVo> list = new ArrayList<BoardVo>();	
 //		

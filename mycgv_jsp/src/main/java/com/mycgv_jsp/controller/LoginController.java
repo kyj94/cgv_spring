@@ -1,5 +1,7 @@
 package com.mycgv_jsp.controller;
 
+import javax.servlet.http.HttpSession;
+
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.RequestMapping;
@@ -26,15 +28,18 @@ public class LoginController {
 	
 	/** login_proc.do - 로그인 처리 **/
 	@RequestMapping(value="login_proc.do", method=RequestMethod.POST)
-	public ModelAndView login_proc(MemberVo memberVo) {
+	public ModelAndView login_proc(MemberVo memberVo,HttpSession session) {
 		ModelAndView model = new ModelAndView();
 		int result = memberService.getLoginResult(memberVo);
 		
 		if(result == 1) {
 			// index 이동
 			// viewName = "index"; viewResolver를 호출 -> index.jsp
+			session.setAttribute("sid", memberVo.getId());
+			
 			model.addObject("login_result", "OK");
 			model.setViewName("index"); // sendRedirect와 동일
+			
 		} else {
 			// login_fail.jsp
 			model.setViewName("redirect:/login_fail.do");
@@ -49,6 +54,35 @@ public class LoginController {
 	public String login_fail() {
 		return "/login/login_fail";
 	}
+	
+//	/** 
+//	 * logout.do - 로그아웃
+//	 */
+//	@RequestMapping(value="logout.do", method=RequestMethod.GET)
+//	public String logout(HttpSession session) {
+//		 String sid = (String)session.getAttribute("sid");
+//	
+//	if(sid != null) {
+//		session.invalidate();
+//	}
+//	return "index";
+//	}
+	
+	/** logout.do - 로그아웃 처리 **/
+	@RequestMapping(value="logout.do", method=RequestMethod.GET)
+	public ModelAndView logout(HttpSession session) {
+		ModelAndView model = new ModelAndView();
+		String sid = (String)session.getAttribute("sid");
+		
+		if(sid != null) {
+			session.invalidate();
+			model.addObject("logout_result", "OK");
+		}
+		
+		model.setViewName("index");
+		return model;
+		}
+	
 	
 	
 	

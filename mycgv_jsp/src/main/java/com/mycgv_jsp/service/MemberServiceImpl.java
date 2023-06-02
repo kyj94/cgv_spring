@@ -1,6 +1,7 @@
 package com.mycgv_jsp.service;
 
 import java.util.ArrayList;
+import java.util.List;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
@@ -36,7 +37,17 @@ public class MemberServiceImpl implements MemberService {
 	@Override
 	public ArrayList<MemberVo> getList(int startCount, int endCount) {
 		/* MemberDao memberDao = new MemberDao(); */
-		return memberDao.select(startCount, endCount);
+//		return memberDao.select(startCount, endCount);
+		
+		ArrayList<MemberVo> mlist = new ArrayList<MemberVo>();
+		List<Object> list = memberDao.select(startCount, endCount);
+		
+		for(Object obj : list) {
+			MemberVo memberVo = (MemberVo)obj;
+			mlist.add(memberVo);
+		}
+		
+		return mlist;
 	} // 회원관리 리스트
 	
 //	@Override

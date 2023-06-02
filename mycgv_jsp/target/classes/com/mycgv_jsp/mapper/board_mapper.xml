@@ -9,13 +9,13 @@
 	<select id="list" parameterType="map" resultType="com.mycgv_jsp.vo.BoardVo">
 		SELECT RNO, BID, BTITLE, BCONTENT, BHITS, ID, BDATE
 		FROM (SELECT ROWNUM RNO, BID, BTITLE, BCONTENT, BHITS, ID, to_char(BDATE, 'yyyy-mm-dd') BDATE
-			FROM(SELECT * FROM MYCGV_BOARD ORDER BY BDATE DESC))
+				FROM(SELECT * FROM MYCGV_BOARD ORDER BY BDATE DESC))
 		WHERE RNO BETWEEN #{start} AND #{end}
 	</select>
 	
 	<select id="list2" resultType="com.mycgv_jsp.vo.BoardVo">
 		SELECT ROWNUM RNO, BID, BTITLE, BCONTENT, BHITS, ID, to_char(BDATE, 'yy-mm-dd') bdate
-			FROM(SELECT * FROM MYCGV_BOARD ORDER BY BDATE DESC)
+		FROM(SELECT * FROM MYCGV_BOARD ORDER BY BDATE DESC)
 	</select>
 	
 		<select id="content" parameterType="java.lang.String" resultType="com.mycgv_jsp.vo.BoardVo">

@@ -1,6 +1,5 @@
 package com.mycgv_jsp.dao;
 
-import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
@@ -12,7 +11,7 @@ import org.springframework.stereotype.Repository;
 import com.mycgv_jsp.vo.MemberVo;
 
 @Repository
-public class MemberDao implements MycgvDao{ // 부분수정 완료 후 extends 지울 예정
+public class MemberDao implements MycgvDao { // 부분수정 완료 후 extends 지울 예정
 	
 	@Autowired
 	private SqlSessionTemplate sqlSession;
@@ -131,14 +130,16 @@ public class MemberDao implements MycgvDao{ // 부분수정 완료 후 extends 지울 예�
 	
 	
 	/** select - 회원 전체 리스트 _ 페이징처리- startCount, endCount **/
-	public ArrayList<MemberVo> select(int startCount, int endCount) {
+	@Override
+	public List<Object> select(int startCount, int endCount) {
 		Map<String, Integer> param = new HashMap<String, Integer>();
 		param.put("start", startCount);
 		param.put("end", endCount);
 		
-		List<MemberVo> list = sqlSession.selectList("mapper.member.list", param);
-		return (ArrayList<MemberVo>)list;
+//		List<MemberVo> list = sqlSession.selectList("mapper.member.list", param);
+//		return (ArrayList<MemberVo>)list;
 		
+		return sqlSession.selectList("mapper.member.list", param);
 		
 //		ArrayList<MemberVo> list = new ArrayList<MemberVo>();	
 //		
