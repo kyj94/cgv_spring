@@ -9,6 +9,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Repository;
 
 import com.mycgv_jsp.vo.MemberVo;
+import com.mycgv_jsp.vo.SessionVo;
 
 @Repository
 public class MemberDao implements MycgvDao { // 부분수정 완료 후 extends 지울 예정
@@ -75,7 +76,8 @@ public class MemberDao implements MycgvDao { // 부분수정 완료 후 extends 지울 예
 	
 	
 	/** loginCheck - 로그인 체크 **/
-	public int loginCheck(MemberVo memberVo) {
+//	public int loginCheck(MemberVo memberVo) {
+	public SessionVo loginCheck(MemberVo memberVo) {
 		return sqlSession.selectOne("mapper.member.login", memberVo);
 		
 		/*

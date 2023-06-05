@@ -6,24 +6,27 @@
     
 <mapper namespace="mapper.member">
 
-	<select id="login" parameterType="com.mycgv_jsp.vo.MemberVo" resultType="int">
-		select count(*) from mycgv_member where id=#{id} and pass=#{pass}
+	<select id="login" parameterType="com.mycgv_jsp.vo.MemberVo" resultType="com.mycgv_jsp.vo.SessionVo">
+		select count(*) LOGINRESULT, NAME, ID
+		from mycgv_member 
+		where id=#{id} and pass=#{pass}
+		GROUP BY NAME,ID
 	</select>
 	
 	<insert id="join" parameterType="com.mycgv_jsp.vo.MemberVo">
 		insert into 
-			MYCGV_MEMBER
-				(id, pass, name, gender, email, addr, tel, pnumber, hobbylist, intro, mdate, grade) 
-			values
-				(#{id}, #{pass}, #{name}, #{gender}, #{email}, #{addr}, #{tel}, #{pnumber}, 
-				#{hobbyList}, #{intro}, sysdate, 'GOLD')
+		MYCGV_MEMBER
+			(id, pass, name, gender, email, addr, tel, pnumber, hobbylist, intro, mdate, grade) 
+		values
+			(#{id}, #{pass}, #{name}, #{gender}, #{email}, #{addr}, #{tel}, #{pnumber}, 
+			#{hobbyList}, #{intro}, sysdate, 'GOLD')
 	</insert>
 	
 	<select id="list" parameterType="map" resultType="com.mycgv_jsp.vo.MemberVo">
 		SELECT RNO, ID, PASS, NAME, GENDER, EMAIL, ADDR, TEL, PNUMBER, HOBBYLIST, INTRO, MDATE, GRADE
-			FROM (SELECT ROWNUM RNO, ID, PASS, NAME, GENDER, EMAIL, ADDR, TEL, PNUMBER, HOBBYLIST, INTRO, TO_CHAR(MDATE, 'YYYY-MM-DD') MDATE, GRADE
-				FROM (SELECT * FROM MYCGV_MEMBER ORDER BY MDATE DESC))
-				WHERE RNO BETWEEN #{start} AND #{end}
+		FROM (SELECT ROWNUM RNO, ID, PASS, NAME, GENDER, EMAIL, ADDR, TEL, PNUMBER, HOBBYLIST, INTRO, TO_CHAR(MDATE, 'YYYY-MM-DD') MDATE, GRADE
+			FROM (SELECT * FROM MYCGV_MEMBER ORDER BY MDATE DESC))
+		WHERE RNO BETWEEN #{start} AND #{end}
 	</select>
 	
 	<select id="idcheck" parameterType="String" resultType="int">

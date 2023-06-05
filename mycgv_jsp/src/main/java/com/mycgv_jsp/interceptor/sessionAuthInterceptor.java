@@ -6,10 +6,11 @@ import javax.servlet.http.HttpSession;
 
 import org.springframework.web.servlet.handler.HandlerInterceptorAdapter;
 
+import com.mycgv_jsp.vo.SessionVo;
+
 public class sessionAuthInterceptor extends HandlerInterceptorAdapter {
-	/**
-	 * preHandle: Controller에 접근하기 전에 수행되는 메소드
-	 */
+	
+	/** preHandle: Controller에 접근하기 전에 수행되는 메소드 **/
 	@Override
 	public boolean preHandle(HttpServletRequest request, HttpServletResponse response, Object handler)
 		    throws Exception {
@@ -17,15 +18,17 @@ public class sessionAuthInterceptor extends HandlerInterceptorAdapter {
 		HttpSession session = request.getSession();
 		
 		// sid 확인하기
-		String sid = (String)session.getAttribute("sid");
-		if(sid == null) {
+//		String sid = (String)session.getAttribute("sid");
+		SessionVo svo = (SessionVo)session.getAttribute("svo");
+		
+//		if(sid == null) 
+		if(svo == null) {
 			// 로그인 안되어 있는 상태이므로 로그인폼으로 전송
 			response.sendRedirect("/mycgv_jsp/login.do");
 			return false;
 		}
 		
-		
 			return true;
-		}
+	}
 
 } // class

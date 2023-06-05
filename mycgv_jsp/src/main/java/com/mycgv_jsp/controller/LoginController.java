@@ -10,6 +10,7 @@ import org.springframework.web.servlet.ModelAndView;
 
 import com.mycgv_jsp.service.MemberService;
 import com.mycgv_jsp.vo.MemberVo;
+import com.mycgv_jsp.vo.SessionVo;
 
 @Controller
 public class LoginController {
@@ -28,15 +29,18 @@ public class LoginController {
 	
 	/** login_proc.do - 로그인 처리 **/
 	@RequestMapping(value="login_proc.do", method=RequestMethod.POST)
-	public ModelAndView login_proc(MemberVo memberVo,HttpSession session) {
+	public ModelAndView login_proc(MemberVo memberVo, HttpSession session) {
 		ModelAndView model = new ModelAndView();
-		int result = memberService.getLoginResult(memberVo);
+//		int result = memberService.getLoginResult(memberVo);
+		SessionVo svo = memberService.getLoginResult(memberVo);
 		
-		if(result == 1) {
+//		if(result() == 1) {
+		if(svo.getLoginResult() == 1) {
 			// index 이동
 			// viewName = "index"; viewResolver를 호출 -> index.jsp
-			session.setAttribute("sid", memberVo.getId());
-			
+//			session.setAttribute("sid", memberVo.getId());
+//			session.setAttribute("sid", memberVo.getId());
+			session.setAttribute("svo", svo);
 			model.addObject("login_result", "OK");
 			model.setViewName("index"); // sendRedirect와 동일
 			
@@ -68,23 +72,23 @@ public class LoginController {
 //	return "index";
 //	}
 	
+	
 	/** logout.do - 로그아웃 처리 **/
 	@RequestMapping(value="logout.do", method=RequestMethod.GET)
 	public ModelAndView logout(HttpSession session) {
 		ModelAndView model = new ModelAndView();
-		String sid = (String)session.getAttribute("sid");
+//		String sid = (String)session.getAttribute("sid");
+		SessionVo svo = (SessionVo)session.getAttribute("svo");
 		
-		if(sid != null) {
+//		if(sid != null) {
+		if(svo != null) {
 			session.invalidate();
 			model.addObject("logout_result", "OK");
 		}
 		
 		model.setViewName("index");
+		
 		return model;
-		}
-	
-	
-	
-	
+	}
 
 } // class
