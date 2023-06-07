@@ -59,7 +59,7 @@ public class FileServiceImpl {
 		String root_path = request.getSession().getServletContext().getRealPath("/");
 		String attach_path = "\\resources\\upload\\";
 		
-		// 파일이 존재하면 서버에 저장
+		// 파일이 존재하면 서버에 삭제
 		if(!boardVo.getFile1().getOriginalFilename().equals("")) { // 새로운 파일 선택
 			File deleteFile = new File(root_path + attach_path + oldFileName);
 			
@@ -70,6 +70,25 @@ public class FileServiceImpl {
 		}
 
 	}
+	
+	
+	/** fileDelete 기능 - 파일 삭제 **/
+	public void fileDelete(HttpServletRequest request, String oldFileName) throws Exception {
+		// 파일의 삭제 위치
+		String root_path = request.getSession().getServletContext().getRealPath("/");
+		String attach_path = "\\resources\\upload\\";
+		
+		// 파일이 존재하면 서버에 삭제
+		if(oldFileName != null && !oldFileName.equals("")) { 
+			File deleteFile = new File(root_path + attach_path + oldFileName);
+			
+			if(deleteFile.exists()) {
+				deleteFile.delete();
+			}
+			
+		}
+	}
+
 	
 
 } // class

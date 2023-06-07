@@ -238,11 +238,12 @@ public class BoardController {
 	
 	/** board_delete_proc.do - 게시글 삭제 처리 **/
 	@RequestMapping(value="/board_delete_proc.do", method=RequestMethod.POST)
-	public String board_delete_proc(String bid, String bsfile) {
+	public String board_delete_proc(String bid, String bsfile, HttpServletRequest request) throws Exception {
 		String viewName = "";
 		int result = boardService.getDelete(bid);
 		
 		if(result == 1) {
+			fileService.fileDelete(request, bsfile);
 			viewName = "redirect:/board_list.do";
 		}  else {
 			// 에러 페이지 호출
