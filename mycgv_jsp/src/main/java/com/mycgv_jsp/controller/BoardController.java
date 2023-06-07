@@ -1,9 +1,7 @@
 package com.mycgv_jsp.controller;
 
-import java.io.File;
 import java.util.ArrayList;
 import java.util.Map;
-import java.util.UUID;
 
 import javax.servlet.http.HttpServletRequest;
 
@@ -18,6 +16,7 @@ import com.google.gson.Gson;
 import com.google.gson.JsonArray;
 import com.google.gson.JsonObject;
 import com.mycgv_jsp.service.BoardService;
+import com.mycgv_jsp.service.FileServiceImpl;
 import com.mycgv_jsp.service.PageServiceImpl;
 import com.mycgv_jsp.vo.BoardVo;
 
@@ -28,6 +27,8 @@ public class BoardController {
 	private BoardService boardService;
 	@Autowired
 	private PageServiceImpl pageService;
+	@Autowired
+	private FileServiceImpl fileService;
 	
 	/** board_list.do - 게시글 전체 리스트 **/
 	/*
@@ -140,37 +141,42 @@ public class BoardController {
 		String viewName = "";
 		
 		// bfile, bsfile 파일명 생성
-		// 파일의 저장위치
-		String root_path = request.getSession().getServletContext().getRealPath("/");
-		String attach_path = "\\resources\\upload\\";
+//		// 파일의 저장위치
+//		String root_path = request.getSession().getServletContext().getRealPath("/");
+//		String attach_path = "\\resources\\upload\\";
 		
-		if(boardVo.getFile1().getOriginalFilename() != null 
-				&& ! boardVo.getFile1().getOriginalFilename().contentEquals("")) { // 파일이 존재하면
-			
-			// BSFILE 파일 중복 처리
-			UUID uuid = UUID.randomUUID();
-			String bfile = boardVo.getFile1().getOriginalFilename();
-			String bsfile = uuid + "_" + bfile;
-//			System.out.println(bfile);
-//			System.out.println(bsfile);
-//			System.out.println(root_path+attach_path);
-			
-			boardVo.setBfile(bfile);
-			boardVo.setBsfile(bsfile);
-		} else {
-//			System.out.println("파일 없음");
-		}
+//		if(boardVo.getFile1().getOriginalFilename() != null 
+//				&& ! boardVo.getFile1().getOriginalFilename().contentEquals("")) { // 파일이 존재하면
+//			
+//			// BSFILE 파일 중복 처리
+//			UUID uuid = UUID.randomUUID();
+//			String bfile = boardVo.getFile1().getOriginalFilename();
+//			String bsfile = uuid + "_" + bfile;
+////			System.out.println(bfile);
+////			System.out.println(bsfile);
+////			System.out.println(root_path+attach_path);
+//			
+//			boardVo.setBfile(bfile);
+//			boardVo.setBsfile(bsfile);
+//		} else {
+////			System.out.println("파일 없음");
+//		}
 		
-		int result = boardService.getWrite(boardVo);
+//		BoardVo boardVo2 = fileService.fileCheck(boardVo);
+//		int result = boardService.getWrite(boardVo);
+		int result = boardService.getWrite(fileService.fileCheck(boardVo));
 		
 		if(result == 1) {
 			// response.sendRedirect("http://localhost:9000/mycgv_jsp/board/board_list.jsp");
 			// viewName = "/board/board_list";
 			
-			// 파일이 존재하면 서버에 저장
-			File saveFile = new File(root_path + attach_path + boardVo.getBsfile());
-			boardVo.getFile1().transferTo(saveFile);
+//			// 파일이 존재하면 서버에 저장
+//			File saveFile = new File(root_path + attach_path + boardVo.getBsfile());
+//			boardVo.getFile1().transferTo(saveFile);
 			
+			if(boardVo.getBfile() != null && boardVo.getBfile().equals("")) {
+				fileService.fileSave(boardVo, request);
+			}
 			
 			viewName = "redirect:/board_list.do";
 		}  else {
@@ -196,11 +202,20 @@ public class BoardController {
 	
 	/** board_update_proc.do - 게시글 수정 처리 **/
 	@RequestMapping(value="/board_update_proc.do", method=RequestMethod.POST)
-	public String board_update_proc(BoardVo boardVo) {
+	public String board_update_proc(BoardVo boardVo, HttpServletRequest request) throws Exception {
 		String viewName = "";
-		int result = boardService.getUpdate(boardVo);
+		
+		String oldFileName = boardVo.getBsfile(); // 새로운 파일 업데이트 시 기존파일 삭제
+		
+//		int result = boardService.getUpdate(boardVo);
+		int result = boardService.getUpdate(fileService.fileCheck(boardVo));
 		
 		if(result == 1) {
+			if(boardVo.getBfile() != null && boardVo.getBsfile().equals("")) {
+				fileService.fileSave(boardVo, request);
+				// 기존 파일 삭제
+				fileService.fileDelete(boardVo, request, oldFileName);
+			}
 			viewName = "redirect:/board_list.do";
 		}  else {
 			// 에러 페이지 호출
@@ -212,9 +227,10 @@ public class BoardController {
 	
 	/** board_delete.do - 게시글 삭제 **/
 	@RequestMapping(value="/board_delete.do", method=RequestMethod.GET)
-	public ModelAndView board_delete(String bid) {
+	public ModelAndView board_delete(String bid, String bsfile) {
 		ModelAndView model = new ModelAndView();
 		model.addObject("bid", bid);
+		model.addObject("bsfile", bsfile);
 		model.setViewName("/board/board_delete");
 		return model;
 	}
@@ -222,7 +238,7 @@ public class BoardController {
 	
 	/** board_delete_proc.do - 게시글 삭제 처리 **/
 	@RequestMapping(value="/board_delete_proc.do", method=RequestMethod.POST)
-	public String board_delete_proc(String bid) {
+	public String board_delete_proc(String bid, String bsfile) {
 		String viewName = "";
 		int result = boardService.getDelete(bid);
 		

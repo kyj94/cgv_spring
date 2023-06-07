@@ -24,8 +24,8 @@
 							<!-- <li><a href="http://localhost:9000/mycgv_jsp/mypage/mypage.jsp" target="_parent">마이페이지</a></li> -->
 							<li><a href="#">VIP</a></li>
 							<li><a href="#">고객센터</a></li>
-							<li><a href="http://localhost:9000/mycgv_jsp/notice/notice_list.do" target="_parent">공지사항</a></li>
-							<li><a href="http://localhost:9000/mycgv_jsp/board/board_list.do" target="_parent">게시판</a></li>
+							<li><a href="http://localhost:9000/mycgv_jsp/notice_list.do" target="_parent">공지사항</a></li>
+							<li><a href="http://localhost:9000/mycgv_jsp/board_list.do" target="_parent">게시판</a></li>
 							<!-- <li><a href="http://localhost:9000/mycgv_jsp/admin/admin_index.do" target="_parent">ADMIN</a></li> -->
 						</ul>
 					</c:when>

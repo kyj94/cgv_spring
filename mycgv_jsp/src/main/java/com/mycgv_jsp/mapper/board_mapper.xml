@@ -31,7 +31,12 @@
 	</insert>
 	
 	<update id="update" parameterType="com.mycgv_jsp.vo.BoardVo">
-		update mycgv_board set btitle=#{btitle}, bcontent=#{bcontent} where bid=#{bid}
+		update mycgv_board 
+		set btitle=#{btitle}, bcontent=#{bcontent}
+		<!-- if(test='bfile!= null') { -->
+			, bfile=#{bfile}, bsfile=#{bsfile}
+		<!-- } -->
+		where bid=#{bid}
 	</update>
 	
 	<delete id="delete" parameterType="com.mycgv_jsp.vo.BoardVo">
@@ -41,10 +46,5 @@
 	<update id="updateHits" parameterType="com.mycgv_jsp.vo.BoardVo">
 		update mycgv_board set bhits=(bhits+1) where bid=#{bid}
 	</update>
-	
-	
-	
-	
-	
 
 </mapper>
