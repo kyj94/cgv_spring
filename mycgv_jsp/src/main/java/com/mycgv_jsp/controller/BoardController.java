@@ -173,8 +173,8 @@ public class BoardController {
 //			// 파일이 존재하면 서버에 저장
 //			File saveFile = new File(root_path + attach_path + boardVo.getBsfile());
 //			boardVo.getFile1().transferTo(saveFile);
-			
-			if(boardVo.getBfile() != null && boardVo.getBfile().equals("")) {
+//			if(boardVo.getBfile() != null && boardVo.getBfile().equals("")) {
+			if(boardVo.getBfile() != null) {
 				fileService.fileSave(boardVo, request);
 			}
 			

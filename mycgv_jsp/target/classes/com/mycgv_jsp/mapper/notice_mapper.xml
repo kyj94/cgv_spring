@@ -26,8 +26,9 @@
 	</select>
 	
 	<insert id="insert" parameterType="com.mycgv_jsp.vo.AdminNoticeVo">
-		INSERT INTO mycgv_admin_notice(nid, NTITLE, NCONTENT, NHITS, NDATE)
-		VALUES ('n_'||LTRIM(to_char(SEQU_MYCGV_ADMIN_NOTICE.nextVal, '0000')), #{ntitle}, #{ncontent}, 0, sysdate)
+		INSERT INTO mycgv_admin_notice(nid, NTITLE, NCONTENT, NHITS, NDATE, NFILE1, NFILE2, NSFILE1, NSFILE2)
+		VALUES ('n_'||LTRIM(to_char(SEQU_MYCGV_ADMIN_NOTICE.nextVal, '0000')), 
+				#{ntitle}, #{ncontent}, 0, sysdate, #{nfile1}, #{nfile2}, #{nsfile1}, #{nsfile2})
 	</insert>
 	
 	<update id="update" parameterType="com.mycgv_jsp.vo.AdminNoticeVo">

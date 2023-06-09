@@ -6,7 +6,9 @@ import java.util.UUID;
 import javax.servlet.http.HttpServletRequest;
 
 import org.springframework.stereotype.Service;
+import org.springframework.web.multipart.commons.CommonsMultipartFile;
 
+import com.mycgv_jsp.vo.AdminNoticeVo;
 import com.mycgv_jsp.vo.BoardVo;
 
 @Service("fileService")
@@ -44,7 +46,7 @@ public class FileServiceImpl {
 		String attach_path = "\\resources\\upload\\";
 		
 		// 파일이 존재하면 서버에 저장
-		if(boardVo.getBfile() != null && boardVo.getBsfile().equals("")) {
+		if(boardVo.getBfile() != null && !boardVo.getBsfile().equals("")) {
 			System.out.println("save file -> " + boardVo.getBfile());
 			File saveFile = new File(root_path + attach_path + boardVo.getBsfile());
 			boardVo.getFile1().transferTo(saveFile);
@@ -88,6 +90,57 @@ public class FileServiceImpl {
 			
 		}
 	}
+	
+	
+	/** multiFileCheck - 멀티파일 체크 기능 **/
+	public AdminNoticeVo multiFileCheck(AdminNoticeVo noticeVo) {
+		
+		for(CommonsMultipartFile file : noticeVo.getFiles()) {
+			
+			if(!file.getOriginalFilename().equals("")) {
+				// 파일 있음
+				UUID uuid = UUID.randomUUID();
+				noticeVo.getNfiles().add(file.getOriginalFilename());
+				noticeVo.getNsfiles().add(uuid+"_"+file.getOriginalFilename());
+			} else {
+				// 파일 없음
+				noticeVo.getNfiles().add("");
+				noticeVo.getNsfiles().add("");
+			} 
+		} // for
+		
+		noticeVo.setNfile1(noticeVo.getNfiles().get(0));
+		noticeVo.setNsfile1(noticeVo.getNsfiles().get(0));
+		noticeVo.setNfile2(noticeVo.getNfiles().get(1));
+		noticeVo.setNsfile2(noticeVo.getNsfiles().get(1));
+		
+		return noticeVo;
+	}
+	
+	
+	/** MutiFileSave - 멀티파일 저장 기능 **/
+	public void mutiFileSave(AdminNoticeVo noticeVo, HttpServletRequest request) throws Exception {
+		
+		// 파일의 저장 위치
+		String root_path = request.getSession().getServletContext().getRealPath("/");
+		String attach_path = "\\resources\\upload\\";
+		
+		int count = 0;
+		
+		for(CommonsMultipartFile file : noticeVo.getFiles()) {
+			// 파일이 존재하면 서버에 저장
+			if(file.getOriginalFilename() != null && !file.getOriginalFilename().equals("")) {
+				File saveFile = new File(root_path + attach_path + noticeVo.getNsfiles().get(count));
+				file.transferTo(saveFile);
+			}
+			
+			count ++;
+		}
+		
+	}
+	
+	
+	
 
 	
 

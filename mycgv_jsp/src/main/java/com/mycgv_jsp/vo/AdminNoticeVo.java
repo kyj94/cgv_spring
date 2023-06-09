@@ -1,9 +1,60 @@
 package com.mycgv_jsp.vo;
 
+import java.util.ArrayList;
+
+import org.springframework.web.multipart.commons.CommonsMultipartFile;
+
 public class AdminNoticeVo {
 	String nid, ntitle, ncontent, ndate;
 	int rno, nhits;
 	
+	CommonsMultipartFile[] files;
+	String nfile1, nfile2, nsfile1, nsfile2;
+	ArrayList<String> nfiles = new ArrayList<String>();
+	ArrayList<String> nsfiles = new ArrayList<String>();
+	
+	public CommonsMultipartFile[] getFiles() {
+		return files;
+	}
+	public void setFiles(CommonsMultipartFile[] files) {
+		this.files = files;
+	}
+	public String getNfile1() {
+		return nfile1;
+	}
+	public void setNfile1(String nfile1) {
+		this.nfile1 = nfile1;
+	}
+	public String getNsfile1() {
+		return nsfile1;
+	}
+	public void setNsfile1(String nsfile1) {
+		this.nsfile1 = nsfile1;
+	}
+	public String getNfile2() {
+		return nfile2;
+	}
+	public void setNfile2(String nfile2) {
+		this.nfile2 = nfile2;
+	}
+	public String getNsfile2() {
+		return nsfile2;
+	}
+	public void setNsfile2(String nsfile2) {
+		this.nsfile2 = nsfile2;
+	}
+	public ArrayList<String> getNfiles() {
+		return nfiles;
+	}
+	public void setNfiles(ArrayList<String> nfiles) {
+		this.nfiles = nfiles;
+	}
+	public ArrayList<String> getNsfiles() {
+		return nsfiles;
+	}
+	public void setNsfiles(ArrayList<String> nsfiles) {
+		this.nsfiles = nsfiles;
+	}
 	public int getRno() {
 		return rno;
 	}

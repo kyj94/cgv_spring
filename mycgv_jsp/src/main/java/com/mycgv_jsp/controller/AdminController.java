@@ -3,12 +3,15 @@ package com.mycgv_jsp.controller;
 import java.util.ArrayList;
 import java.util.Map;
 
+import javax.servlet.http.HttpServletRequest;
+
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.servlet.ModelAndView;
 
+import com.mycgv_jsp.service.FileServiceImpl;
 import com.mycgv_jsp.service.MemberService;
 import com.mycgv_jsp.service.NoticeService;
 import com.mycgv_jsp.service.PageServiceImpl;
@@ -24,6 +27,8 @@ public class AdminController {
 	private NoticeService noticeService;
 	@Autowired
 	private PageServiceImpl pageService;
+	@Autowired
+	private FileServiceImpl fileService;
 	
 	/** admin_index - 관리자 공지사항 페이지  **/
 	@RequestMapping(value="/admin_index.do", method=RequestMethod.GET)
@@ -91,16 +96,21 @@ public class AdminController {
 	
 	/** admin_write_proc.do - 관리자 공지사항 작성 처리  **/
 	@RequestMapping(value="/admin_write_proc.do", method=RequestMethod.POST)
-	public String admin_write_proc(AdminNoticeVo adminNoticeVo) {
+	public String admin_write_proc(AdminNoticeVo noticeVo, HttpServletRequest request) throws Exception {
 		String viewName = "";
-		int result = noticeService.getInsert(adminNoticeVo);
+		
+		// 멀티파일 업로드
+		int result = noticeService.getInsert(fileService.multiFileCheck(noticeVo));
+		
+		if(result == 1) {
 			
-			if(result == 1) {
-				viewName = "redirect:/admin_notice_list.do";
-			}  else {
-				// 에러 페이지 호출
+			if(noticeVo.getFiles()[0].getOriginalFilename() != null) {
+				fileService.mutiFileSave(noticeVo, request);
 			}
 			
+			viewName = "redirect:/admin_notice_list.do";
+		}
+		
 		return viewName;
 	}
 	
