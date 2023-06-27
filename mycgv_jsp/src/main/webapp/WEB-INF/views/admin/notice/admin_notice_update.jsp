@@ -59,30 +59,22 @@
 							<!-- 파일 여부에 따라 -->
 							<input type="file" name="file1" id="file1">
 							<c:choose>
-							  <c:when test="${adminNoticeVo.nfile1 != null}">
-							    <c:choose>
 							      <c:when test="${adminNoticeVo.nfile1 != null}">
 							        <span id="update_file1">${adminNoticeVo.nfile1}</span>
 							      </c:when>
 							      <c:otherwise>
 							        <span id="update_file1">선택된 파일 없음</span>
 							      </c:otherwise>
-							    </c:choose>
-							    </c:when>
 						    </c:choose>
 						    
 						    <input type="file" name="file2" id="file2">
 						    <c:choose>
-							  <c:when test="${adminNoticeVo.nfile2 != null}">
-							    <c:choose>
 							      <c:when test="${adminNoticeVo.nfile2 != null}">
 							        <span id="update_file2">${adminNoticeVo.nfile2}</span>
 							      </c:when>
 							      <c:otherwise>
 							        <span id="update_file2">선택된 파일 없음</span>
 							      </c:otherwise>
-							    </c:choose>
-							  </c:when>
 						    </c:choose>
 							
 						</td>

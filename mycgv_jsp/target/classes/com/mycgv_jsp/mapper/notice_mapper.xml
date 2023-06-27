@@ -32,7 +32,9 @@
 	</insert>
 	
 	<update id="update" parameterType="com.mycgv_jsp.vo.AdminNoticeVo">
-		update MYCGV_ADMIN_NOTICE set ntitle=#{ntitle}, ncontent=#{ncontent} where nid=#{nid}
+		update MYCGV_ADMIN_NOTICE 
+	    set ntitle=#{ntitle}, ncontent=#{ncontent}, nfile1=#{nfile1}, nfile2=#{nfile2}, nsfile1=#{nsfile1}, nsfile2=#{nsfile2}  
+	    where nid=#{nid}
 	</update>
 	
 	<delete id="delete" parameterType="com.mycgv_jsp.vo.AdminNoticeVo">
