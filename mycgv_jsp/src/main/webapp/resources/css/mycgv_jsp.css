@@ -516,6 +516,14 @@ section.board form[name='deleteForm'] table td {
 	font-weight:700;
 }
 
+section.board span#update_file {
+	/* border:1px solid red; */
+	display: inline-block;
+	width: 200px;
+	padding-left: -50px;
+	/* margin-left: -20px; */
+}
+
 /*****************************************
 	Board style sheet
 *******************************************/
@@ -527,6 +535,29 @@ section.admin div {
 section.admin div article {	
 	padding:10px;
 }
+
+
+
+
+section.board span#update_file1, section.board span#update_file2  {
+	text-aglin: left;
+	display: inline-block;
+	width: 200px;
+	position: relative;
+	left: 115px;
+	top: -30px;
+	background: white;
+	}
+
+section.board span#update_file1 {
+	display: inline-block;
+	margin-top: 2px;
+}
+
+section.board span#update_file2 {
+	display: inline-block;
+	margin-top: 12px;
+}	
 
 
 

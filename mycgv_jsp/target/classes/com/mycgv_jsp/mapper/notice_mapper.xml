@@ -7,20 +7,20 @@
 <mapper namespace="mapper.notice">
 
 	<select id="list" parameterType="map" resultType="com.mycgv_jsp.vo.AdminNoticeVo">
-		SELECT RNO, NID, NTITLE, NCONTENT, NHITS, NDATE
-		FROM (SELECT ROWNUM RNO, NID, NTITLE, NCONTENT, NHITS, TO_CHAR(NDATE, 'YYYY-MM-DD') NDATE
+		SELECT RNO, NID, NTITLE, NCONTENT, NHITS, NDATE, NFILE1, NFILE2, NSFILE1, NSFILE2
+		FROM (SELECT ROWNUM RNO, NID, NTITLE, NCONTENT, NHITS, TO_CHAR(NDATE, 'YYYY-MM-DD') NDATE, NFILE1, NFILE2, NSFILE1, NSFILE2
 				FROM (SELECT * FROM MYCGV_ADMIN_NOTICE
 				ORDER BY NDATE DESC))
 		WHERE RNO BETWEEN #{start} AND #{end}
 	</select>
 	
 	<select id="list2" resultType="com.mycgv_jsp.vo.AdminNoticeVo">
-		SELECT ROWNUM RNO, NID, NTITLE, NCONTENT, NHITS, to_char(NDATE, 'yyyy-mm-dd') NDATE
+		SELECT ROWNUM RNO, NID, NTITLE, NCONTENT, NHITS, to_char(NDATE, 'yyyy-mm-dd') NDATE, NFILE1, NFILE2, NSFILE1, NSFILE2
 		FROM (SELECT * FROM MYCGV_ADMIN_NOTICE" + " ORDER BY NDATE DESC)
 	</select>
 	
 	<select id="content" parameterType="java.lang.String" resultType="com.mycgv_jsp.vo.AdminNoticeVo">
-		SELECT NID, NTITLE, NCONTENT, NHITS, NDATE 
+		SELECT NID, NTITLE, NCONTENT, NHITS, NDATE, NFILE1, NFILE2, NSFILE1, NSFILE2
 		FROM MYCGV_ADMIN_NOTICE 
 		WHERE NID = #{nid}
 	</select>

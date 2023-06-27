@@ -73,8 +73,8 @@
 					<tr>
 						<th>파일업로드</th>
 						<td>
-							<input type="text" name="bfile" value="${boardVo.bfile}">
-							<input type="text" name="bsfile" value="${boardVo.bsfile}">
+							<input type="hidden" name="bfile" value="${boardVo.bfile}">
+							<input type="hidden" name="bsfile" value="${boardVo.bsfile}">
 							<input type="file" name="file1" id="file1">
 							
 							<!-- 파일 여부에 따라 -->

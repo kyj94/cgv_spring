@@ -24,8 +24,8 @@ public class FileServiceImpl {
 			String bfile = boardVo.getFile1().getOriginalFilename();
 			String bsfile = uuid + "_" + bfile;
 
-			System.out.println(bfile);
-			System.out.println(bsfile);
+			System.out.println("bfile : " + bfile);
+			System.out.println("bsfile : " + bsfile);
 
 			boardVo.setBfile(bfile);
 			boardVo.setBsfile(bsfile);

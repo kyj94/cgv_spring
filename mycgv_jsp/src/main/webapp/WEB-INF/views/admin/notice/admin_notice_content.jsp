@@ -1,5 +1,6 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8"
     pageEncoding="UTF-8"%>
+<%@ taglib uri="http://java.sun.com/jsp/jstl/core" prefix="c" %>    
 <!DOCTYPE html>
 <html>
 <head>
@@ -23,7 +24,13 @@
 				
 				<tr>
 					<th>내용</th>
-					<td>${adNot.ncontent}</td>
+					<td>${adNot.ncontent}<br><br><br>
+					<!-- 파일 여부에 따라 -->
+					<c:if test="${adNot.nsfile1 != null || adNot.nsfile2 != null}">
+						<img src="http://localhost:9000/mycgv_jsp/upload/${adNot.nsfile1}">	<br>
+						<img src="http://localhost:9000/mycgv_jsp/upload/${adNot.nsfile2}">
+					</c:if>
+					</td>
 				</tr>
 				
 				<tr>

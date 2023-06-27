@@ -209,15 +209,15 @@ public class BoardController {
 		
 //		int result = boardService.getUpdate(boardVo);
 		int result = boardService.getUpdate(fileService.fileCheck(boardVo));
-		
+	    
 		if(result == 1) {
-			if(boardVo.getBfile() != null && boardVo.getBsfile().equals("")) {
-				fileService.fileSave(boardVo, request);
-				// 기존 파일 삭제
-				fileService.fileDelete(boardVo, request, oldFileName);
-			}
-			viewName = "redirect:/board_list.do";
-		}  else {
+			if (boardVo.getBfile() != null && !boardVo.getBsfile().equals("")) {
+	            fileService.fileSave(boardVo, request);
+	            // 기존 파일 삭제
+	            fileService.fileDelete(boardVo, request, oldFileName);
+	        }
+	        viewName = "redirect:/board_list.do";
+	    } else {
 			// 에러 페이지 호출
 		}
 		

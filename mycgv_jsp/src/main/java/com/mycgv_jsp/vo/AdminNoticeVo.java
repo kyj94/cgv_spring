@@ -92,9 +92,4 @@ public class AdminNoticeVo {
 		this.nhits = nhits;
 	}
 	
-	
 }
-
-
-
-
